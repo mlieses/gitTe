@@ -11,49 +11,59 @@
 <!-- JQuery UI Datepicker -->
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="/resources/demos/style.css">
+<link rel="stylesheet" href="css/m_detail.css">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script>
-  $( function() {
-    $( "#datepicker" ).datepicker();
-  } );
-</script>
-<!--
-image hover 확대 
-<style type="text/css">
-	.scale {
-	  transform: scale(1);
-	  -webkit-transform: scale(1);
-	  -moz-transform: scale(1);
-	  -ms-transform: scale(1);
-	  -o-transform: scale(1);
-	  transition: all 0.3s ease-in-out;   /* 부드러운 모션을 위해 추가*/
-	}
-	.scale:hover {
-	  transform: scale(1.2);
-	  -webkit-transform: scale(1.2);
-	  -moz-transform: scale(1.2);
-	  -ms-transform: scale(1.2);
-	  -o-transform: scale(1.2);
-	}
-	.img {width:325px; height:280px; overflow:hidden }
-</style>
- -->
 </head>
 <body>
-
-<jsp:include page="Top.jsp"/>
-
-<!-- 
+  <!--
 달력
-Date: <div id="datepicker"></div> 
+Date: <div id="datepicker"></div>
 -->
 <!--
 <div class="img">
    <div class="scale"><img src="building_6_01.PNG"></div>
 </div>
 -->
+<jsp:include page="Top.jsp"/>
+
+	<div class="w3-container main-container" style="padding:0;">
+		<div class="w3-row row-container">
+			<div class="w3-col l6 w3-center img" id="img_div1">
+				<div class="scale" id="img_div1-1">
+					<img alt="" src="img/c1.PNG">
+				</div>
+			</div>
+			<div class="w3-col l6 w3-center" id="img_div2">
+				<div class="w3-row row-container" id="row-container2">
+					<div class="w3-col m6 w3-center hidden" >
+						<div class="scale" id="img_div2-1">
+							<img alt="" src="img/c1.PNG">
+						</div>
+					</div>
+					<div class="w3-col m6 w3-center hidden">
+						<div class="scale" id="img_div2-2">
+							<img alt="" src="img/c1.PNG">
+						</div>
+					</div>
+
+					<div class="w3-col m6 w3-center hidden">
+						<div class="scale" id="img_div2-3">
+							<img alt="" src="img/c1.PNG">
+						</div>
+					</div>
+					<div class="w3-col m6 w3-center hidden">
+						<div class="scale" id="img_div2-4">
+							<img alt="" src="img/c1.PNG">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
 
 
 
