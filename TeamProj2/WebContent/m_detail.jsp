@@ -31,12 +31,12 @@ Date: <div id="datepicker"></div>
 
 	<div class="w3-container main-container" style="padding:0;">
 		<div class="w3-row row-container">
-			<div class="w3-col l6 w3-center img" id="img_div1">
+			<div class="w3-col m6 w3-center img" id="img_div1">
 				<div class="scale" id="img_div1-1">
 					<img alt="" src="img/c1.PNG">
 				</div>
 			</div>
-			<div class="w3-col l6 w3-center" id="img_div2">
+			<div class="w3-col m6 w3-center" id="img_div2">
 				<div class="w3-row row-container" id="row-container2">
 					<div class="w3-col m6 w3-center hidden" >
 						<div class="scale" id="img_div2-1">
@@ -78,6 +78,23 @@ Date: <div id="datepicker"></div>
 			</div>
 		</div>
 	</div>
+	
+	<div class="w3-content con">
+		<div class="w3-content cen">
+			<div class="w3-row w3-border">
+				<div class="w3-threequarter w3-container w3-red">
+					
+				</div>
+				<div class="w3-quarter w3-container">
+					<h2>w3-quarter</h2>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	
+	<!-- 
 	<div class="container">
 		<div class="container-header">
 			<div class="spaceType-a"><h4><a href="#">공간타입</a></h4></div>
@@ -85,7 +102,7 @@ Date: <div id="datepicker"></div>
 		</div>
 	
 	</div>
-
+	 -->
 <script src="js/m_detail_slide.js"></script>
 
 </body>
