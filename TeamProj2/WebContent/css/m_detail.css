@@ -129,24 +129,30 @@
 .time-date{
 	width:100%;
 	height: 300px;
+	margin-bottom:50px;
 }
-.date1, .date2{
+.date1{
 	
-	height: 100px;
+	height: 100%;
 }
 #datepicker1{
 	width:100%;
+	height:100%;
 }
-#datepicker2{
+.map{
+	
+	height:100%;	
+}
+#map{
 	width:100%;
+	height:100%;
 }
 
 #datepicker1>div{
 	width:100%;
+	height:100%;
 }
-#datepicker2>div{
-	width:100%;
-}
+
 
 .time{
 	width: 100%;
@@ -161,32 +167,49 @@
 /* content-option 시작 */
 .content-option{
 	width: 100%;
-	height: 400px;
+	height: 200px;
 	border: 1px solid red;
 }
 .option{
 	width: 100%;
-	height: 10%;
+	height: 20%;
 	border: 1px solid blue;
+	
+}
+.option div{
+	float:left;
+	width:50px;
+	
 }
 
-.option-list{
+.option-amenities{
 	width: 100%;
-	height: 20%;
+	height: 40%;
 	border: 1px solid yellow;
 }
-.option-content{
+.option-amenities img{
+	width:24px;
+	height:24px;
+}
+.option-charge{
 	width: 100%;
-	height: 10%px;
+	height: 40%;
 	border: 1px solid green;
 }
-.option-textarea{
-	width: 100%;
-	height: 60%;
-	border: 1px solid black;
-}
+
 
 /* content-option 끝 */
+
+
+
+
+
+
+
+
+
+
+
 
 /*
 .container{

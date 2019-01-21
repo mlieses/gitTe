@@ -33,8 +33,12 @@
 
                         var result = results[0]; //첫번째 결과의 값을 활용
 
-                       alert(result.x);
-                       alert(result.y);
+//                        alert(result.x);
+//                        alert(result.y);
+// 						console.log(result.x);
+// 						console.log(result.y);
+                        document.write(result.x);
+                        document.write(result.y);
                     }
                 });
             }
