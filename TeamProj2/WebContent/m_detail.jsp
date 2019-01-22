@@ -204,23 +204,21 @@
 	var i =0;
 	<c:forEach items="${noList}" var="item1">
 		disabledDays[i] = "${item1}";
-		alert(disabledDays[i]);
-		i=i+1;
-			
+		var num = disabledDays[i].indexOf('-');
+		
 	</c:forEach>
 	
 	
 	
-	function disableAllTheseDays(date) { 
-		   var m = date.getMonth(), d = date.getDate(), y = date.getFullYear();
-		   
-		   for (var i=0;i<disabledDays.length; i++) { 
-		       if($.inArray(y + '-' +(m+1) + '-' + d,disabledDays) != -1) { 
-		           return [false]; 
-		       } 
-		   } 
-		   return [true]; 
-		}
+	function disableAllTheseDays(date) {
+	    var m = date.getMonth(), d = date.getDate(), y = date.getFullYear();
+	    for (i = 0; i < disabledDays.length; i++) {
+	        if($.inArray(y + '-' +(m+1) + '-' + d,disabledDays) != -1) {
+	            return [false];
+	        }
+	    }
+	    return [true];
+	}
 	
 	$("#datepicker1").datepicker({
 		minDate: 0,
