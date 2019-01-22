@@ -42,51 +42,67 @@
 		<div class="w3-row row-container">
 			<div class="w3-col m6 w3-center img" id="img_div1">
 				<div class="scale" id="img_div1-1">
-					<img alt="" src="img/c1.PNG">
+					<img alt="" src="img/c1.PNG" id="img1" onclick="big(1)">
 				</div>
 			</div>
 			<div class="w3-col m6 w3-center" id="img_div2">
 				<div class="w3-row row-container" id="row-container2">
 					<div class="w3-col m6 w3-center hidden" >
 						<div class="scale" id="img_div2-1">
-							<img alt="" src="img/c2.PNG">
+							<img alt="" src="img/c2.PNG" id="img2" onclick="big(2)">
 						</div>
 					</div>
 					<div class="w3-col m6 w3-center hidden">
 						<div class="scale" id="img_div2-2">
-							<img alt="" src="img/c3.PNG">
+							<img alt="" src="img/c3.PNG" id="img3" onclick="big(3)">
 						</div>
 					</div>
 
 					<div class="w3-col m6 w3-center hidden">
 						<div class="scale" id="img_div2-3">
-							<img alt="" src="img/c4.PNG">
+							<img alt="" src="img/c4.PNG" id="img4" onclick="big(4)">
 						</div>
 					</div>
 					<div class="w3-col m6 w3-center hidden">
 						<div class="scale" id="img_div2-4">
-							<img alt="" src="img/d1.PNG">
+							<img alt="" src="img/d1.PNG" id="img5" onclick="big(5)">
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-
+	
+<!-- img modal -->	
+	<div id="modal01" class="w3-modal" onclick="this.style.display='none'">
+	    <span class="w3-button w3-hover-red w3-xlarge w3-display-topright">&times;</span>
+	    <div class="w3-modal-content w3-animate-zoom">
+	      <img src="img_snowtops.jpg" id="modalImg" style="width:1000px;height:500px">
+	    </div>
+	</div>
+<!-- img modal -->	
+	
+<!-- 캐러셀 시작 -->
 	<div class="w3-container main-slide" style="padding:0;">
 		<div class="w3-content w3-display-container" style="width: 100%;height:100%;">
 			<img class="mySlides" src="img/c1.PNG" style="width: 100%;height:100%;">
 			<img class="mySlides" src="img/c2.PNG" style="width: 100%;height:100%;">
 			<img class="mySlides" src="img/c3.PNG" style="width: 100%;height:100%;">
+			<img class="mySlides" src="img/c4.PNG" style="width: 100%;height:100%;">
+			<img class="mySlides" src="img/d1.PNG" style="width: 100%;height:100%;">
 			<div class="w3-center w3-container w3-section w3-large w3-text-white w3-display-bottommiddle" style="width: 100%">
 				<div class="w3-display-left w3-hover-text-khaki" onclick="plusDivs(-1)">&#10094;</div>
 				<div class="w3-right w3-hover-text-khaki" onclick="plusDivs(1)">&#10095;</div>
 				<span class="w3-badge demo w3-border w3-transparent w3-hover-white"	onclick="currentDiv(1)"></span>
 				<span class="w3-badge demo w3-border w3-transparent w3-hover-white"	onclick="currentDiv(2)"></span>
 				<span class="w3-badge demo w3-border w3-transparent w3-hover-white"	onclick="currentDiv(3)"></span>
+				<span class="w3-badge demo w3-border w3-transparent w3-hover-white"	onclick="currentDiv(4)"></span>
+				<span class="w3-badge demo w3-border w3-transparent w3-hover-white"	onclick="currentDiv(5)"></span>
 			</div>
 		</div>
 	</div>
+	<!-- 캐러셀 끝 -->
+	
 	
 	<div class="w3-content content-center">
 		<div class="w3-content content-header">
@@ -204,11 +220,9 @@
 	var i =0;
 	<c:forEach items="${noList}" var="item1">
 		disabledDays[i] = "${item1}";
-		var num = disabledDays[i].indexOf('-');
-		
 	</c:forEach>
 	
-	
+// 	var disabledDays = ["2019-1-24","2019-1-25"];
 	
 	function disableAllTheseDays(date) {
 	    var m = date.getMonth(), d = date.getDate(), y = date.getFullYear();
@@ -224,7 +238,18 @@
 		minDate: 0,
 		maxDate: 7,
 		dateFormat: 'yy-mm-dd',
-		beforeShowDay: disableAllTheseDays
+		beforeShowDay: disableAllTheseDays,
+		 onSelect: function(date) {
+	           $.ajax({
+	              url:'getBookTime',
+	              type:'post',
+	              data:{"date": data},
+	              success : function(data){
+	                 
+	              }
+	           })
+	        }   
+
 	});
 	
 </script>

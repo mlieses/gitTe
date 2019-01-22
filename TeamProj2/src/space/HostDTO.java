@@ -3,9 +3,11 @@ package space;
 public class HostDTO {
 	String host_id;
 	String email;
+	String host_pass;
 	String host_nic;
 	String host_phone;
 	int host_level;
+	
 	
 	
 	public String getHost_id() {
@@ -19,6 +21,12 @@ public class HostDTO {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	public String getHost_pass() {
+		return host_pass;
+	}
+	public void setHost_pass(String host_pass) {
+		this.host_pass = host_pass;
 	}
 	public String getHost_nic() {
 		return host_nic;

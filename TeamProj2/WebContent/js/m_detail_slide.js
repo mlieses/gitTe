@@ -1,4 +1,4 @@
-
+/* 캐러셀 시작 */
 var slideIndex = 1;
 showDivs(slideIndex);
 
@@ -25,6 +25,17 @@ function showDivs(n) {
   x[slideIndex-1].style.display = "block";  
   dots[slideIndex-1].className += " w3-white";
 }
+/* 캐러셀 끝 */
+
+function big(num){
+	var id = "img"+num;
+	
+	var ss = document.getElementById(id).getAttribute('src');
+	document.getElementById('modalImg').setAttribute('src', ss);
+	document.getElementById('modal01').style.display='block';
+}
+
+
 
 function map(){
 	var lat = document.getElementById("lat").value;

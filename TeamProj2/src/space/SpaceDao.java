@@ -4,12 +4,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
+
+
 
 public class SpaceDao {
 	private Connection con;
@@ -143,10 +146,12 @@ public class SpaceDao {
 				hostDto = new HostDTO();
 				hostDto.setHost_id(rs.getString(1));
 				hostDto.setEmail(rs.getString(2));
-				hostDto.setHost_nic(rs.getString(3));
-				hostDto.setHost_phone(rs.getString(4));
-				hostDto.setHost_level(rs.getInt(5));
+				hostDto.setHost_pass(rs.getString(3));
+				hostDto.setHost_nic(rs.getString(4));
+				hostDto.setHost_phone(rs.getString(5));
+				hostDto.setHost_level(rs.getInt(6));
 				list.add(hostDto);
+				
 			}
 			
 		} catch (SQLException e) {
@@ -172,8 +177,12 @@ public class SpaceDao {
 		pstmt = con.prepareStatement(sql);
 		rs = pstmt.executeQuery();
 		while(rs.next()){
-			noList.add(rs.getDate(1).toString());
-			System.out.println(rs.getDate(1).toString());
+			
+			SimpleDateFormat old_format =  new SimpleDateFormat("yyyy-MM-dd");
+			SimpleDateFormat ne_format = new SimpleDateFormat("yyyy-M-dd");
+			String dd = ne_format.format(rs.getDate(1));
+			noList.add(dd);
+//			System.out.println(dd);
 		}
 		}catch(Exception e){
 			System.out.println("getNoDate에서 에러"+e);
