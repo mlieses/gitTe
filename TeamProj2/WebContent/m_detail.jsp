@@ -22,6 +22,7 @@
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=030fe73ff2f443d44661c605e8a0667f"></script>
 <!-- jstl -->
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix='fn' %>
 </head>
 <body>
 <c:set var="hosting" value="${list['0']}"></c:set>
@@ -29,6 +30,11 @@
 <c:set var="bill" value="${list['2']}"></c:set>
 <c:set var="option" value="${list['3']}"></c:set>
 <c:set var="pic" value="${list['4']}"></c:set>
+<c:set var="host" value="${list['5']}"></c:set>
+<c:set var="lat" value="${address.a_wdo}"></c:set>
+<c:set var="lng" value="${address.a_kdo}"></c:set>
+<c:set var="noList" value="${noList}"></c:set>
+
 <jsp:include page="Top.jsp"/>
 
 
@@ -100,7 +106,7 @@
 					<!-- click 이벤트 추가 하기 -->
 					<div class="w3-container host-profile">
 						<img src="img/profile.jpg" class="w3-circle" alt="Car" style="width: 100px">
-						<h2>nick name</h2>
+						<h2>${host.host_nic}</h2>
 					</div>
 				</div>
 			</div>
@@ -116,8 +122,8 @@
 				</div>
 				<div class="w3-half w3-container map">
 					<div id="map"></div>
-<%-- 					<input type="hidden" id="lat" value="${address.a_wdo}"> --%>
-<%-- 					<input type="hidden" id="lng" value="${address.a_kdo}"> --%>
+					<input type="hidden" id="lat" value="${lat}">
+					<input type="hidden" id="lng" value="${lng}">
 				</div>
 			</div>
 			<div class="w3-content time w3-center">
@@ -146,16 +152,15 @@
 				<div>	
 					<i class="material-icons">local_drink</i>
 				</div>
-				<div style="width:120px;">
-					&nbsp;<b>기본음료 제공</b>
-					<c:if test="${hosting.drink}=='1'">
-						<c:out value=" : X"></c:out>
-					</c:if>
+				<div style="width:140px;">
+					&nbsp;<b>기본음료 제공<c:if test="${hosting.drink eq 0}"> : X</c:if>
+									  <c:if test="${hosting.drink eq 1}"> : 0</c:if>
+						</b>
 				</div>
 			</div>
 			<div class="w3-content option-amenities">
 				<div>
-					편의시설
+					<b>편의시설</b>
 				</div><br>
 				<div>
 					<img src="https://img.icons8.com/metro/50/000000/elevator.png">
@@ -170,7 +175,7 @@
 			</div>
 			<div class="w3-content option-charge">
 				<div>
-					유료옵션
+					<b>유료옵션</b>
 				</div><br>
 				<div>
 					<img src="https://img.icons8.com/metro/26/000000/parking.png">
@@ -194,8 +199,36 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="js/m_detail_slide.js"></script>
 <script type="text/javascript">
-	$("#datepicker1").datepicker();
-</script>
 
+	var disabledDays = [];
+	var i =0;
+	<c:forEach items="${noList}" var="item1">
+		disabledDays[i] = "${item1}";
+		alert(disabledDays[i]);
+		i=i+1;
+			
+	</c:forEach>
+	
+	
+	
+	function disableAllTheseDays(date) { 
+		   var m = date.getMonth(), d = date.getDate(), y = date.getFullYear();
+		   
+		   for (var i=0;i<disabledDays.length; i++) { 
+		       if($.inArray(y + '-' +(m+1) + '-' + d,disabledDays) != -1) { 
+		           return [false]; 
+		       } 
+		   } 
+		   return [true]; 
+		}
+	
+	$("#datepicker1").datepicker({
+		minDate: 0,
+		maxDate: 7,
+		dateFormat: 'yy-mm-dd',
+		beforeShowDay: disableAllTheseDays
+	});
+	
+</script>
 </body>
 </html>

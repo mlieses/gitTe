@@ -168,24 +168,24 @@
 .content-option{
 	width: 100%;
 	height: 200px;
-	border: 1px solid red;
+	
 }
 .option{
 	width: 100%;
 	height: 20%;
-	border: 1px solid blue;
+	
 	
 }
 .option div{
 	float:left;
-	width:50px;
+	width:40px;
 	
 }
 
 .option-amenities{
 	width: 100%;
 	height: 40%;
-	border: 1px solid yellow;
+	
 }
 .option-amenities img{
 	width:24px;
@@ -194,7 +194,7 @@
 .option-charge{
 	width: 100%;
 	height: 40%;
-	border: 1px solid green;
+	
 }
 
 

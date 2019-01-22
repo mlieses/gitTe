@@ -1,7 +1,7 @@
 package space;
 
 public class HostingDTO {
-	int host_no;	//호스트 번호
+	String host_id;	//호스트 번호
 	int room_no;	//룸자동생성번호
 	String subject;	//제목
 	String room;	//공간타입
@@ -14,12 +14,11 @@ public class HostingDTO {
 	int socket;		//콘센트
 	
 	
-	
-	public int getHost_no() {
-		return host_no;
+	public String getHost_id() {
+		return host_id;
 	}
-	public void setHost_no(int host_no) {
-		this.host_no = host_no;
+	public void setHost_id(String host_id) {
+		this.host_id = host_id;
 	}
 	public int getRoom_no() {
 		return room_no;

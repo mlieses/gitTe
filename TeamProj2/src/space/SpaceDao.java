@@ -25,7 +25,7 @@ public class SpaceDao {
 				// 1. Was서버와 연결된 웹프로젝트의 모든정보를 가지고 있는 컨텍스트 객체 생성
 				Context init = new InitialContext();
 				// 2. 연결된 Was서버에서 DataSource(커넥션 풀)을 검색해서 얻기
-				ds = (DataSource)init.lookup("java:comp/env/jdbc/jspbeginner");
+				ds = (DataSource)init.lookup("java:comp/env/jdbc/ShareSpace");
 				
 			} catch (Exception e) {
 				// TODO: handle exception
@@ -65,8 +65,9 @@ public class SpaceDao {
 		HostingDTO hdto;
 		HAddressDTO haDto;
 		HBillDTO hbDto;
-		HOptionDTO hoDTO;
-		HPicDTO hpDTO;
+		HOptionDTO hoDto;
+		HPicDTO hpDto;
+		HostDTO hostDto;
 		try {
 			con = ds.getConnection();
 			String sql = "select * "
@@ -85,11 +86,10 @@ public class SpaceDao {
 			rs = pstmt.executeQuery();
 			if(rs.next()){
 				hdto=new HostingDTO();
-				hdto.setHost_no(rs.getInt(1));
+				hdto.setHost_id(rs.getString(1));
 				hdto.setRoom_no(num);
 				hdto.setSubject(rs.getString(3));
 				hdto.setRoom(rs.getString(4));
-				System.out.println(rs.getString(4));
 				hdto.setPeople(rs.getInt(5));
 				hdto.setDrink(rs.getInt(6));
 				hdto.setElevator(rs.getInt(7));
@@ -113,51 +113,77 @@ public class SpaceDao {
 				hbDto.setRoom_sum(rs.getInt(21));
 				list.add(hbDto);
 				
-				hoDTO = new HOptionDTO();
-				hoDTO.setParking(rs.getInt(23));
-				hoDTO.setWifi(rs.getInt(24));
-				hoDTO.setProjector(rs.getInt(25));
-				hoDTO.setLaptop(rs.getInt(26));
-				hoDTO.setCabinet(rs.getInt(27));
-				list.add(hoDTO);
+				hoDto = new HOptionDTO();
+				hoDto.setParking(rs.getInt(23));
+				hoDto.setWifi(rs.getInt(24));
+				hoDto.setProjector(rs.getInt(25));
+				hoDto.setLaptop(rs.getInt(26));
+				hoDto.setCabinet(rs.getInt(27));
+				list.add(hoDto);
 				
-				hpDTO = new HPicDTO();
-				hpDTO.setPic1(rs.getString(29));
-				hpDTO.setPic2(rs.getString(30));
-				hpDTO.setPic3(rs.getString(31));
-				hpDTO.setPic4(rs.getString(32));
-				hpDTO.setPic5(rs.getString(33));
-				list.add(hpDTO);
+				hpDto = new HPicDTO();
+				hpDto.setPic1(rs.getString(29));
+				hpDto.setPic2(rs.getString(30));
+				hpDto.setPic3(rs.getString(31));
+				hpDto.setPic4(rs.getString(32));
+				hpDto.setPic5(rs.getString(33));
+				list.add(hpDto);
 				
+			}
+			con = ds.getConnection();
+			sql="select * "
+			  + "from host "
+			  + "where host_id = (select host_id"
+			  +					" from hosting "
+			  + 				" where room_no=?)";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			rs = pstmt.executeQuery();
+			if(rs.next()){
+				hostDto = new HostDTO();
+				hostDto.setHost_id(rs.getString(1));
+				hostDto.setEmail(rs.getString(2));
+				hostDto.setHost_nic(rs.getString(3));
+				hostDto.setHost_phone(rs.getString(4));
+				hostDto.setHost_level(rs.getInt(5));
+				list.add(hostDto);
 			}
 			
 		} catch (SQLException e) {
 			System.out.println(e.getErrorCode());
 			System.out.println("getSpace에서 오류남"+e);
 
-		}freeResource();
+		}finally {
+			freeResource();
+		}
 		return list;
 	}
-	
-	/*
-		public void getSpace(int num){
-			try {
-				con = ds.getConnection();
-				String sql = "select * from hosting where room_no=?";
-				pstmt = con.prepareStatement(sql);
-				pstmt.setInt(1, num);
-				rs = pstmt.executeQuery();
-				if(rs.next()){
-					System.out.println(rs.getString("room"));
-				}
-			}catch(Exception e){
-				e.printStackTrace();
-				
-			}freeResource();
-			
+
+	public ArrayList getNoDate() {
+		ArrayList noList = new ArrayList();
+		try{
+		con = ds.getConnection();
+		String sql = "select b.book_date "
+					+"from (select * from booking where book_check=0) b "
+					+"join booking_time bt "
+					+"on b.book_no = bt.book_no and "
+					+"b.book_date = bt.book_date "
+					+"where bt.t10 in(1) and bt.t11 in(1) and bt.t12 in(1) and bt.t13 in(1) and bt.t14 in(1) and bt.t15 in(1) and bt.t16 in(1) and bt.t17 in(1) and bt.t18 in(1) and bt.t19 in(1) and bt.t20 in(1) and bt.t21 in(1)";
+		pstmt = con.prepareStatement(sql);
+		rs = pstmt.executeQuery();
+		while(rs.next()){
+			noList.add(rs.getDate(1).toString());
+			System.out.println(rs.getDate(1).toString());
 		}
-		
-		*/
+		}catch(Exception e){
+			System.out.println("getNoDate에서 에러"+e);
+		}finally{
+			freeResource();
+		}
+		return noList;
+	}
+	
+	
 		
 		
 
