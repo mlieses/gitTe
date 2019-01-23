@@ -171,7 +171,10 @@ public class SpaceDao {
 		ArrayList noList = new ArrayList();
 		try{
 			for(int i=0;i<7;i++){
+				
 				Date date = Date.valueOf(LocalDate.now().plusDays(i));
+				System.out.println(date);
+				SimpleDateFormat fo = new SimpleDateFormat("yyyy-M-dd");
 					con = ds.getConnection();
 					String sql = "select sum(bt.t10), sum(bt.t11), sum(bt.t12), sum(bt.t13), "
 								+"sum(bt.t14),sum(bt.t15), sum(bt.t16), sum(bt.t17), "
@@ -187,17 +190,30 @@ public class SpaceDao {
 					pstmt.setInt(2, num);
 					rs = pstmt.executeQuery();
 					if(rs.next()){
-						SimpleDateFormat ne_format = new SimpleDateFormat("yyyy-M-dd");
-						String dd = ne_format.format(rs.getDate(1));
-						noList.add(dd);
+						for(int j=1;j<13;j++){
+							System.out.println("rs.get()"+j+"번째 값: "+rs.getInt(j));
+							if(rs.getInt(j)==0){
+								break;
+							}
+							if(j==12){
+								System.out.println(date);
+								noList.add(fo.format(date));
+							}
+						}
+						
+//						SimpleDateFormat ne_format = new SimpleDateFormat("yyyy-M-dd");
+//						String dd = ne_format.format(rs.getDate(1));
+//						noList.add(dd);
 			//			System.out.println(dd);
 					}
+					freeResource();
 			}
 		}catch(Exception e){
 			System.out.println("getNoDate에서 에러"+e);
 		}finally{
 			freeResource();
 		}
+		
 		return noList;
 	}
 

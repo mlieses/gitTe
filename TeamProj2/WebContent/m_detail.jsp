@@ -260,18 +260,18 @@
 		dateFormat: 'yy-mm-dd',
 		beforeShowDay: disableAllTheseDays,
 		 onSelect: function(date) {
-	           $.ajax({
-	              url:'TimeSpaceController',
-	              type:'post',
-	              data:{"date":date, "room_no":num},
-	              success : function(data){
-	                 
-	              }
-	           })
+	           
 	        }   
 
 	});
 	
+	function aFn()
+	$.ajax({
+        url:'TimeSpaceController',
+        type:'post',
+        data:{"date":date, "room_no":num}
+       
+     })
 </script>
 </body>
 </html>
