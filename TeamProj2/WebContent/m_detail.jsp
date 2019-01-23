@@ -73,16 +73,16 @@
 		</div>
 	</div>
 	
-<!-- img modal -->	
+<!-- img modal------------------------------------------------- -->	
 	<div id="modal01" class="w3-modal" onclick="this.style.display='none'">
 	    <span class="w3-button w3-hover-red w3-xlarge w3-display-topright">&times;</span>
 	    <div class="w3-modal-content w3-animate-zoom">
 	      <img src="img_snowtops.jpg" id="modalImg" style="width:1000px;height:500px">
 	    </div>
 	</div>
-<!-- img modal -->	
+<!-- img modal------------------------------------------------- -->	
 	
-<!-- 캐러셀 시작 -->
+<!-- 캐러셀 시작------------------------------------------------- -->
 	<div class="w3-container main-slide" style="padding:0;">
 		<div class="w3-content w3-display-container" style="width: 100%;height:100%;">
 			<img class="mySlides" src="img/c1.PNG" style="width: 100%;height:100%;">
@@ -101,7 +101,7 @@
 			</div>
 		</div>
 	</div>
-	<!-- 캐러셀 끝 -->
+	<!-- 캐러셀 끝------------------------------------------------- -->
 	
 	
 	<div class="w3-content content-center">
@@ -127,6 +127,8 @@
 				</div>
 			</div>
 		</div>
+		
+<!-- time content ------------------------------------------------->
 		<div class="w3-content content-time">
 			<div class="w3-content time-subject">
 			<h3>예약 가능 여부</h3>
@@ -157,12 +159,15 @@
 				<button class="w3-button w3-white w3-border">21:00</button>
 			</div>
 		</div>
+<!-- time content ------------------------------------------------->
+		
+<!-- option content ------------------------------------------------->		
 		<div class="w3-content content-option">
 			<div class="w3-content option">
 				<div>
 					<i class="material-icons">group</i>
 				</div>
-				<div>
+				<div style="margin-right:20px;">
 					&nbsp;<b>${hosting.people}명</b>
 				</div>
 				<div>	
@@ -208,7 +213,22 @@
 			</div>
 		</div>
 	</div>
+<!-- option content ------------------------------------------------->	
+<!-- footer content ------------------------------------------------->	
 	
+	<footer class="w3-container w3-dark-gray foot">
+		<div class="w3-content foot-content" >
+			<div class="w3-row foot-row">
+				<div class="w3-col m10" style="height:100%;">
+					hi
+				</div>
+				<div class="w3-col m2" style="text-align:center;height:100%;">
+					<button class="w3-button w3-white w3-center w3-border w3-xlarge" ><b>예약</b></button>
+				</div>
+			</div>
+		</div>
+	</footer>
+
 	
 
 
@@ -241,9 +261,9 @@
 		beforeShowDay: disableAllTheseDays,
 		 onSelect: function(date) {
 	           $.ajax({
-	              url:'getBookTime',
+	              url:'TimeSpaceController',
 	              type:'post',
-	              data:{"date": data},
+	              data:{"date":date, "room_no":num},
 	              success : function(data){
 	                 
 	              }

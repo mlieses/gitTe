@@ -5,7 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+
 import java.util.ArrayList;
+import java.sql.Date;
 import java.util.List;
 
 import javax.naming.Context;
@@ -164,32 +167,43 @@ public class SpaceDao {
 		return list;
 	}
 
-	public ArrayList getNoDate() {
+	public ArrayList getNoDate(int num) {
 		ArrayList noList = new ArrayList();
 		try{
-		con = ds.getConnection();
-		String sql = "select b.book_date "
-					+"from (select * from booking where book_check=0) b "
-					+"join booking_time bt "
-					+"on b.book_no = bt.book_no and "
-					+"b.book_date = bt.book_date "
-					+"where bt.t10 in(1) and bt.t11 in(1) and bt.t12 in(1) and bt.t13 in(1) and bt.t14 in(1) and bt.t15 in(1) and bt.t16 in(1) and bt.t17 in(1) and bt.t18 in(1) and bt.t19 in(1) and bt.t20 in(1) and bt.t21 in(1)";
-		pstmt = con.prepareStatement(sql);
-		rs = pstmt.executeQuery();
-		while(rs.next()){
-			
-			SimpleDateFormat old_format =  new SimpleDateFormat("yyyy-MM-dd");
-			SimpleDateFormat ne_format = new SimpleDateFormat("yyyy-M-dd");
-			String dd = ne_format.format(rs.getDate(1));
-			noList.add(dd);
-//			System.out.println(dd);
-		}
+			for(int i=0;i<7;i++){
+				Date date = Date.valueOf(LocalDate.now().plusDays(i));
+					con = ds.getConnection();
+					String sql = "select sum(bt.t10), sum(bt.t11), sum(bt.t12), sum(bt.t13), "
+								+"sum(bt.t14),sum(bt.t15), sum(bt.t16), sum(bt.t17), "
+								+"sum(bt.t18), sum(bt.t19), sum(bt.t20), sum(bt.t21) "
+								+ "from (select * "
+								+ 		"from booking "
+								+ 		"where book_check=0 and book_date=? and room_no=?) b " 
+								+"join booking_time bt "
+								+"on b.book_no = bt.book_no "
+								+"and b.book_date = bt.book_date";
+					pstmt = con.prepareStatement(sql);
+					pstmt.setDate(1, date);
+					pstmt.setInt(2, num);
+					rs = pstmt.executeQuery();
+					if(rs.next()){
+						SimpleDateFormat ne_format = new SimpleDateFormat("yyyy-M-dd");
+						String dd = ne_format.format(rs.getDate(1));
+						noList.add(dd);
+			//			System.out.println(dd);
+					}
+			}
 		}catch(Exception e){
 			System.out.println("getNoDate에서 에러"+e);
 		}finally{
 			freeResource();
 		}
 		return noList;
+	}
+
+	public void getTime(String selectDate, int roomNo) {
+		
+		
 	}
 	
 	

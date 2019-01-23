@@ -89,7 +89,7 @@
 /* content-header 시작 */
 .content-center{
 	
-	height: 500px;
+	height: auto;
 	position:relative;
 	
 }
@@ -121,6 +121,7 @@
 	
 	height:500px;
 	width:100%;
+	border-bottom: 1px solid #b3b3b3;
 }
 
 .time-subject{
@@ -168,6 +169,7 @@
 
 /* content-option 시작 */
 .content-option{
+	margin-top:30px;
 	width: 100%;
 	height: 200px;
 	
@@ -202,9 +204,20 @@
 
 /* content-option 끝 */
 
+/* footer content */
+.foot{
+	height:75px;
+}
 
+.foot-content{
+	border:1px solid red;
+	height:100%;
+}
 
-
+.foot-row{
+	width:100%;
+	height:100%;
+}
 
 
 

@@ -29,7 +29,7 @@ public class SpaceController extends HttpServlet {
 		SpaceDao dao = new SpaceDao();
 		List list = dao.getSpace(num);
 		request.setAttribute("list", list);
-		List noList = dao.getNoDate();
+		List noList = dao.getNoDate(num);
 		request.setAttribute("noList", noList);
 		RequestDispatcher dis = request.getRequestDispatcher("m_detail.jsp");
 		dis.forward(request, response);
