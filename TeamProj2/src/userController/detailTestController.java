@@ -35,6 +35,7 @@ public class detailTestController extends HttpServlet {
 		response.getWriter().print(json);
 		
 		
+		
 	}
 	
 	

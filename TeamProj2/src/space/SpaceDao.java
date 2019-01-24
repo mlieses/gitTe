@@ -15,6 +15,9 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
 
 
 public class SpaceDao {
@@ -41,14 +44,6 @@ public class SpaceDao {
 		
 		// 리소스 반납(해제) 메서드
 		public void freeResource(){
-			if(con != null){
-				try {
-					con.close();
-				} catch (Exception e) {
-					// TODO: handle exception
-					e.printStackTrace();
-				}
-			}
 			if(rs != null){
 				try {
 					rs.close();
@@ -63,7 +58,15 @@ public class SpaceDao {
 					// TODO: handle exception
 					e.printStackTrace();
 				}
+			}if(con != null){
+				try {
+					con.close();
+				} catch (Exception e) {
+					// TODO: handle exception
+					e.printStackTrace();
+				}
 			}
+			
 		}
 
 	public List getSpace(int num) {
@@ -217,9 +220,51 @@ public class SpaceDao {
 		return noList;
 	}
 
-	public void getTime(String selectDate, int roomNo) {
+	public JSONArray getTime(Date selectDate, int roomNo) {
 		
+		JSONArray jarray = new JSONArray();
 		
+		try{
+			con = ds.getConnection();
+			String sql = "select sum(bt.t10), sum(bt.t11), sum(bt.t12), sum(bt.t13), "
+						+"sum(bt.t14),sum(bt.t15), sum(bt.t16), sum(bt.t17), "
+						+"sum(bt.t18), sum(bt.t19), sum(bt.t20), sum(bt.t21) "
+						+ "from (select * "
+						+ 		"from booking "
+						+ 		"where book_check=0 and book_date=? and room_no=?) b " 
+						+"join booking_time bt "
+						+"on b.book_no = bt.book_no "
+						+"and b.book_date = bt.book_date";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setDate(1, selectDate);
+			pstmt.setInt(2, roomNo);
+			rs = pstmt.executeQuery();
+			if(rs.next()){
+								
+				jarray.add(rs.getInt(1));
+				jarray.add(rs.getInt(2));
+				jarray.add(rs.getInt(3));
+				jarray.add(rs.getInt(4));
+				jarray.add(rs.getInt(5));
+				jarray.add(rs.getInt(6));
+				jarray.add(rs.getInt(7));
+				jarray.add(rs.getInt(8));
+				jarray.add(rs.getInt(9));
+				jarray.add(rs.getInt(10));
+				jarray.add(rs.getInt(11));
+				jarray.add(rs.getInt(12));
+				
+				
+			}
+		}catch(Exception e){
+			System.out.println("getTime에서 오류"+e);
+		}finally{
+			freeResource();
+		}
+		for(int i=0;i<jarray.size();i++){
+			System.out.println("i : "+jarray.get(i));
+		}
+		return jarray;
 	}
 	
 	

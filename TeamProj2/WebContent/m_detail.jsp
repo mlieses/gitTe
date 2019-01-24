@@ -18,6 +18,7 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="/resources/demos/style.css">
 
+
 <!-- 카카오 맵 script -->
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=030fe73ff2f443d44661c605e8a0667f"></script>
 <!-- jstl -->
@@ -145,18 +146,18 @@
 				</div>
 			</div>
 			<div class="w3-content time w3-center">
-				<button class="w3-button w3-white w3-border">10:00</button>
-				<button class="w3-button w3-white w3-border">11:00</button>
-				<button class="w3-button w3-white w3-border">12:00</button>
-				<button class="w3-button w3-white w3-border">13:00</button>
-				<button class="w3-button w3-white w3-border">14:00</button>
-				<button class="w3-button w3-white w3-border">15:00</button>
-				<button class="w3-button w3-white w3-border">16:00</button>
-				<button class="w3-button w3-white w3-border">17:00</button>
-				<button class="w3-button w3-white w3-border">18:00</button>
-				<button class="w3-button w3-white w3-border">19:00</button>
-				<button class="w3-button w3-white w3-border">20:00</button>
-				<button class="w3-button w3-white w3-border">21:00</button>
+				<button class="w3-button w3-white w3-border t_btn" id="1">10:00</button>
+				<button class="w3-button w3-white w3-border t_btn" id="2">11:00</button>
+				<button class="w3-button w3-white w3-border t_btn" id="3">12:00</button>
+				<button class="w3-button w3-white w3-border t_btn" id="4">13:00</button>
+				<button class="w3-button w3-white w3-border t_btn" id="5">14:00</button>
+				<button class="w3-button w3-white w3-border t_btn" id="6">15:00</button>
+				<button class="w3-button w3-white w3-border t_btn" id="7">16:00</button>
+				<button class="w3-button w3-white w3-border t_btn" id="8">17:00</button>
+				<button class="w3-button w3-white w3-border t_btn" id="9">18:00</button>
+				<button class="w3-button w3-white w3-border t_btn" id="10">19:00</button>
+				<button class="w3-button w3-white w3-border t_btn" id="11">20:00</button>
+				<button class="w3-button w3-white w3-border t_btn" id="12">21:00</button>
 			</div>
 		</div>
 <!-- time content ------------------------------------------------->
@@ -183,32 +184,54 @@
 				<div>
 					<b>편의시설</b>
 				</div><br>
-				<div>
-					<img src="https://img.icons8.com/metro/50/000000/elevator.png">
-					엘리베이터
-					<img src="https://img.icons8.com/metro/26/000000/wall-socket.png">
-					콘센트
-					<img src="https://img.icons8.com/metro/26/000000/air-conditioner.png">
-					에어컨
-					<img src="https://img.icons8.com/metro/26/000000/heating.png">
-					난방
+				<div class="amenities">
+					<div id="elevator">
+						<img src="https://img.icons8.com/metro/50/000000/elevator.png">
+						엘리베이터
+					</div>
+					<div id="wall-socket">
+						<img src="https://img.icons8.com/metro/26/000000/wall-socket.png">
+						콘센트
+					</div>
+					<div id="air-conditioner">
+						<img src="https://img.icons8.com/metro/26/000000/air-conditioner.png">
+						에어컨
+					</div>
+					<div id="heating">
+						<img src="https://img.icons8.com/metro/26/000000/heating.png">
+						난방
+					</div>
+					<div id="toilet">
+						<img src="https://img.icons8.com/metro/26/000000/toilet.png">
+						화장실
+					</div>
 				</div>
 			</div>
 			<div class="w3-content option-charge">
 				<div>
 					<b>유료옵션</b>
 				</div><br>
-				<div>
-					<img src="https://img.icons8.com/metro/26/000000/parking.png">
-					주차 : o
-					<img src="https://img.icons8.com/metro/26/000000/wifi.png">
-					무선인터넷
-					<img src="https://img.icons8.com/metro/26/000000/video-projector.png">
-					프로젝터 빔
-					<img src="https://img.icons8.com/metro/26/000000/laptop.png">
-					노트북 대여
-					<img src="https://img.icons8.com/metro/26/000000/filing-cabinet.png">
-					사물함
+				<div class="charge">
+					<div id="wifi">
+						<img src="https://img.icons8.com/metro/26/000000/wifi.png">
+						무선인터넷
+					</div>
+					<div id="video-projector">
+						<img src="https://img.icons8.com/metro/26/000000/video-projector.png">
+						프로젝터 빔
+					</div>
+					<div id="laptop">
+						<img src="https://img.icons8.com/metro/26/000000/laptop.png">
+						노트북 대여
+					</div>
+					<div id="cabinet">
+						<img src="https://img.icons8.com/metro/26/000000/filing-cabinet.png">
+						사물함
+					</div>
+					<div id="parking">
+						<img src="https://img.icons8.com/metro/26/000000/parking.png">
+						주차
+					</div>
 				</div>
 			</div>
 		</div>
@@ -235,12 +258,18 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="js/m_detail_slide.js"></script>
 <script type="text/javascript">
-
+	var num = '${hosting.room_no}';
 	var disabledDays = [];
 	var i =0;
 	<c:forEach items="${noList}" var="item1">
 		disabledDays[i] = "${item1}";
 	</c:forEach>
+	
+	
+	
+	var list;
+	var s_date;
+	
 	
 // 	var disabledDays = ["2019-1-24","2019-1-25"];
 	
@@ -259,19 +288,53 @@
 		maxDate: 7,
 		dateFormat: 'yy-mm-dd',
 		beforeShowDay: disableAllTheseDays,
-		 onSelect: function(date) {
-	           
-	        }   
+		onSelect: function(date) {
+			s_date=date;
+			nonBtn(date)
+// 	         alert(date);
+	    }   
 
 	});
 	
-	function aFn()
-	$.ajax({
-        url:'TimeSpaceController',
-        type:'post',
-        data:{"date":date, "room_no":num}
-       
-     })
+	 function nonBtn(date){
+		 $.ajax({
+	        url:'TimeSpaceController',
+	        type:'post',
+	        data:{"date":date, "room_no":num},
+	        success : function(data){
+	        
+	        	var json = JSON.parse(data);
+	        	
+	        	$(".t_btn").attr("disabled",false);
+	        	for(var i=1;i<13;i++){
+	        		if(json[i]==1){
+	        			$(".t_btn").eq(i).attr("disabled",true);
+	        		}
+	        	}
+	        }
+	     }); 
+	 }
+	 
+	 /*시간 버튼 클릭 했을때 값 추출*/
+	 $(".t_btn").on("click", function(event){
+		list = new Array();
+		 var target = $(event.target);
+		 if(target.hasClass("w3-grey")){
+			 var num = list.indexOf(target.attr("id"));
+			 list.pop(num);
+			target.removeClass("w3-grey");
+		 }else{
+		 	target.addClass("w3-grey");
+		 	list.push(target.attr("id"));
+		 }
+		 list.forEach(function(element) {
+			  console.log(element);
+			});
+	 })
+	 
+/* option 표시 */
+ 	
+	 
 </script>
 </body>
 </html>

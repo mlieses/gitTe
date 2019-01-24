@@ -171,12 +171,12 @@
 .content-option{
 	margin-top:30px;
 	width: 100%;
-	height: 200px;
+	height: auto;
 	
 }
 .option{
 	width: 100%;
-	height: 20%;
+	height: 60px;
 	
 	
 }
@@ -189,16 +189,24 @@
 .option-amenities{
 	width: 100%;
 	height: 40%;
-	
+	margin-bottom:50px;
 }
 .option-amenities img{
 	width:24px;
 	height:24px;
 }
+.amenities div{
+	float:left;
+	width:150px;
+}
 .option-charge{
 	width: 100%;
 	height: 40%;
-	
+	margin-bottom:50px;
+}
+.charge div{
+	float:left;
+	width:150px;
 }
 
 
