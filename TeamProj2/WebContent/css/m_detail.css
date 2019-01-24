@@ -227,11 +227,24 @@
 	height:100%;
 }
 
+.foot-price{
+	height:100%;
+}
 
+.reservation-req{
+	text-align:center;
+	height:100%;
+}
 
+.req-div{
+	border:1px solid blue;
+	width:85px;
+	display:inline-block;
+}
 
-
-
+#req-btn{
+	
+}
 
 
 /*

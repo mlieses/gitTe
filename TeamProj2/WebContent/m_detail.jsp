@@ -189,11 +189,11 @@
 						<img src="https://img.icons8.com/metro/50/000000/elevator.png">
 						엘리베이터
 					</div>
-					<div id="wall-socket">
+					<div id="socket">
 						<img src="https://img.icons8.com/metro/26/000000/wall-socket.png">
 						콘센트
 					</div>
-					<div id="air-conditioner">
+					<div id="airconditioner">
 						<img src="https://img.icons8.com/metro/26/000000/air-conditioner.png">
 						에어컨
 					</div>
@@ -216,7 +216,7 @@
 						<img src="https://img.icons8.com/metro/26/000000/wifi.png">
 						무선인터넷
 					</div>
-					<div id="video-projector">
+					<div id="projector">
 						<img src="https://img.icons8.com/metro/26/000000/video-projector.png">
 						프로젝터 빔
 					</div>
@@ -242,11 +242,13 @@
 	<footer class="w3-container w3-dark-gray foot">
 		<div class="w3-content foot-content" >
 			<div class="w3-row foot-row">
-				<div class="w3-col m10" style="height:100%;">
+				<div class="w3-col m10 foot-price">
 					hi
 				</div>
-				<div class="w3-col m2" style="text-align:center;height:100%;">
-					<button class="w3-button w3-white w3-center w3-border w3-xlarge" ><b>예약</b></button>
+				<div class="w3-col m2 reservation-req">
+					<div class="w3-container">
+						<button class="w3-button w3-white w3-center w3-border w3-xlarge" id="req-btn" ><b>예약</b></button>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -266,11 +268,10 @@
 	</c:forEach>
 	
 	
-	
-	var list;
+	var list = new Array();
 	var s_date;
 	
-	
+	optionDisplay();
 // 	var disabledDays = ["2019-1-24","2019-1-25"];
 	
 	function disableAllTheseDays(date) {
@@ -317,7 +318,7 @@
 	 
 	 /*시간 버튼 클릭 했을때 값 추출*/
 	 $(".t_btn").on("click", function(event){
-		list = new Array();
+		
 		 var target = $(event.target);
 		 if(target.hasClass("w3-grey")){
 			 var num = list.indexOf(target.attr("id"));
@@ -333,8 +334,38 @@
 	 })
 	 
 /* option 표시 */
- 	
-	 
+//  	alert(typeof(${hosting.elevator})); //number
+	function optionDisplay(){
+		//무료
+		if(${hosting.elevator}==0){
+			$("#elevator").css("display", "none")
+		}
+		if(${hosting.toilet}==0){
+			$("#toilet").css("display", "none")
+		}
+		if(${hosting.airconditioner}==0){
+			$("#airconditioner").css("display", "none")
+		}
+		if(${hosting.socket}==0){
+			$("#socket").css("display", "none")
+		}
+		//유료옵션
+		if(${option.parking}==0){
+			$("#parking").css("display", "none")
+		}
+		if(${option.wifi}==0){
+			$("#wifi").css("display", "none")
+		}
+		if(${option.projector}==0){
+			$("#projector").css("display", "none")
+		}
+		if(${option.laptop}==0){
+			$("#laptop").css("display", "none")
+		}
+		if(${option.cabinet}==0){
+			$("#cabinet").css("display", "none")
+		}
+	}
 </script>
 </body>
 </html>
