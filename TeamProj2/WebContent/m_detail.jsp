@@ -237,13 +237,20 @@
 		</div>
 	</div>
 <!-- option content ------------------------------------------------->	
+
+<!-- footer include -->
+
 <!-- footer content ------------------------------------------------->	
 	
 	<footer class="w3-container w3-dark-gray foot">
 		<div class="w3-content foot-content" >
 			<div class="w3-row foot-row">
 				<div class="w3-col m10 foot-price">
-					hi
+					<div class="price-div">
+						<div class="price">
+							
+						</div>
+					</div>
 				</div>
 				<div class="w3-col m2 reservation-req">
 					<div class="w3-container">
@@ -267,10 +274,11 @@
 		disabledDays[i] = "${item1}";
 	</c:forEach>
 	
+	var list;
+	var s_date="";
 	
-	var list = new Array();
-	var s_date;
 	
+	$(".t_btn").attr("disabled",true);	//날짜를 선택하기전 시간 버튼 disabled
 	optionDisplay();
 // 	var disabledDays = ["2019-1-24","2019-1-25"];
 	
@@ -287,10 +295,12 @@
 	$("#datepicker1").datepicker({
 		minDate: 0,
 		maxDate: 7,
-		dateFormat: 'yy-mm-dd',
+		dateFormat: 'yy-mm-dd D',
 		beforeShowDay: disableAllTheseDays,
 		onSelect: function(date) {
+			
 			s_date=date;
+
 			nonBtn(date)
 // 	         alert(date);
 	    }   
@@ -298,6 +308,9 @@
 	});
 	
 	 function nonBtn(date){
+		 $(".t_btn").attr("disabled",false);	
+		 $(".t_btn").removeClass("w3-grey");	//시간버튼 클릭시 변경되는 색상 모두 제거
+		 	list = new Array();
 		 $.ajax({
 	        url:'TimeSpaceController',
 	        type:'post',
@@ -306,7 +319,7 @@
 	        
 	        	var json = JSON.parse(data);
 	        	
-	        	$(".t_btn").attr("disabled",false);
+// 	        	$(".t_btn").attr("disabled",false);
 	        	for(var i=1;i<13;i++){
 	        		if(json[i]==1){
 	        			$(".t_btn").eq(i).attr("disabled",true);
@@ -317,21 +330,41 @@
 	 }
 	 
 	 /*시간 버튼 클릭 했을때 값 추출*/
-	 $(".t_btn").on("click", function(event){
+	$(".t_btn").on("click", function(event){
+		var f_date = [];
+		f_date = s_date.split(" ");
+// 		alert(f_date[1]);
+		var d_str = f_date[1];
+		var target = $(event.target);
+		var a_price = 0;
+		var test = 1;
 		
-		 var target = $(event.target);
-		 if(target.hasClass("w3-grey")){
-			 var num = list.indexOf(target.attr("id"));
-			 list.pop(num);
+		if(target.hasClass("w3-grey")){
+			var num = list.indexOf(target.attr("id"));
+			list.pop(num);
 			target.removeClass("w3-grey");
-		 }else{
-		 	target.addClass("w3-grey");
+		}else{
+			target.addClass("w3-grey");
 		 	list.push(target.attr("id"));
-		 }
-		 list.forEach(function(element) {
-			  console.log(element);
-			});
-	 })
+		}
+		
+		if(d_str=="Sat" || d_str=="Sun"){
+			var price = parseInt(${bill.room_sum});
+			var timeNum = list.length;
+			a_price = String(price*timeNum);
+		}else{
+			var price = parseInt(${bill.room_day});
+			var timeNum = list.length;
+			a_price = String(price*timeNum);
+		}
+		$(".price").html(a_price);
+		console.log("start");
+// 		 console.log(list.length);
+		
+		list.forEach(function(element) {
+			console.log(element);
+		});
+	})
 	 
 /* option 표시 */
 //  	alert(typeof(${hosting.elevator})); //number
@@ -367,5 +400,6 @@
 		}
 	}
 </script>
+<script src="js/test.js"></script>
 </body>
 </html>

@@ -19,9 +19,12 @@ public class TimeSpaceController extends HttpServlet {
 	       
     
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Date selectDate = Date.valueOf(request.getParameter("date"));
+		String date[] = request.getParameter("date").split(" ");
+		
+		Date selectDate = Date.valueOf(date[0]);
 		int roomNo = Integer.parseInt(request.getParameter("room_no"));
-		System.out.println("date : "+selectDate);
+		
+		System.out.println("date : "+request.getParameter("date"));
 		System.out.println("room : "+roomNo);
 		SpaceDao dao = new SpaceDao();
 		JSONArray jarray = dao.getTime(selectDate, roomNo);

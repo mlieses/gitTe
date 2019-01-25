@@ -15,6 +15,8 @@
  
 </body>
 <script type="text/javascript">
-
+var test = 1;
 </script>
+<script src="js/test.js"></script>
+
 </html>

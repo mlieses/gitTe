@@ -1,4 +1,4 @@
-
+/* 너비가 768px 이하일때의 미디어 쿼리 -------------------------------------------- */
 @media (max-width : 768px) {
 	.main-container {
 		display: none;
@@ -22,6 +22,8 @@
 	
 	
 }
+
+/* 너비가 769px 이상일때의 미디어 쿼리 -------------------------------------------- */
 
 @media (min-width : 769px) {
 	.main-container {
@@ -212,7 +214,7 @@
 
 /* content-option 끝 */
 
-/* footer content */
+/* footer content --------------------------------------------------- */
 .foot{
 	height:75px;
 }
@@ -231,6 +233,18 @@
 	height:100%;
 }
 
+.price-div{
+	text-align:center;
+	height:100%;
+}
+.price{
+	border:1px solid blue;
+	display:inline-block;
+	width:85px;
+}
+
+
+
 .reservation-req{
 	text-align:center;
 	height:100%;
@@ -243,10 +257,10 @@
 }
 
 #req-btn{
-	
+	margin-top: 10px;
 }
 
-
+/* footer content --------------------------------------------------- */
 /*
 .container{
 	border: 1px solid blue;	
