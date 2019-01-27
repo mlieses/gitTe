@@ -1,3 +1,5 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="space.CommentDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -17,7 +19,11 @@
 <!-- JQuery UI Datepicker -->
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="/resources/demos/style.css">
-
+<style type="text/css">
+.w3-ul li{
+	padding:0;
+}
+</style>
 
 <!-- 카카오 맵 script -->
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=030fe73ff2f443d44661c605e8a0667f"></script>
@@ -32,8 +38,7 @@
 <c:set var="option" value="${list['3']}"></c:set>
 <c:set var="pic" value="${list['4']}"></c:set>
 <c:set var="host" value="${list['5']}"></c:set>
-<c:set var="lat" value="${address.a_wdo}"></c:set>
-<c:set var="lng" value="${address.a_kdo}"></c:set>
+<c:set var="commentList" value="${commentList}"></c:set>
 <c:set var="noList" value="${noList}"></c:set>
 
 <jsp:include page="Top.jsp"/>
@@ -141,8 +146,8 @@
 				</div>
 				<div class="w3-half w3-container map">
 					<div id="map"></div>
-					<input type="hidden" id="lat" value="${lat}">
-					<input type="hidden" id="lng" value="${lng}">
+					<input type="hidden" id="lat" value="${address.a_wdo}">
+					<input type="hidden" id="lng" value="${address.a_kdo}">
 				</div>
 			</div>
 			<div class="w3-content time w3-center">
@@ -235,7 +240,50 @@
 				</div>
 			</div>
 		</div>
+<!-- comment시작 ---------------------------------------------------->
+		<div class="w3-content content-comment">
+			<ul class="w3-ul w3-card-4">
+				<li class="w3-bar w3-light-grey">
+					<div class="w3-bar-item item-img-div">
+						<img src="img/c1.PNG" class="w3-circle w3-hide-small c-profile-img">
+					</div>
+					<div class="w3-bar-item item-div">
+						<span>Mike</span><br> <span>(Web Designer)</span>
+					</div>
+					<div class="item-input">
+			        	<input type="text" class="w3-input" id="c_content" style="width:590px; display:inline-block;" />
+			        	<button class="w3-button w3-grey" id="insert_btn">등록</button>
+			      	</div>
+				</li>
+				<!-- session 으로 email을 들고와서 비교 
+ 						<c:if test="${comment.email eq sessionEmail }" ></c:if>
+ 						 --> 
+				<c:forEach var="comment" items="${commentList}">
+					
+					<li class="w3-bar">
+						
+						<button class="w3-right w3-white w3-border-0 c-btn${comment.comment_no}" id="${comment.comment_no }">x</button>
+						<button class="w3-white w3-right w3-border-0 u_btn" id="${comment.comment_no}">
+							<img src="https://img.icons8.com/metro/26/000000/edit.png">
+						</button>
+						<div class="w3-bar-item item-img-div">
+							<img src="img/c1.PNG" class="w3-circle w3-hide-small c-profile-img">
+						</div>
+						<div class="w3-bar-item item-div">
+							<span>${comment.nick_name}</span><br> <span>(${comment.email})</span>
+						</div>
+						<div class="item-content">
+							<span>${comment.com_content}</span>
+						</div>
+					</li>
+				</c:forEach>
+			</ul>
+		</div>
+		
+		
+		
 	</div>
+	
 <!-- option content ------------------------------------------------->	
 
 <!-- footer include -->
@@ -254,14 +302,19 @@
 				</div>
 				<div class="w3-col m2 reservation-req">
 					<div class="w3-container">
-						<button class="w3-button w3-white w3-center w3-border w3-xlarge" id="req-btn" ><b>예약</b></button>
+						<button class="w3-button w3-white w3-center w3-border w3-xlarge" id="req-btn" ><b>예약하기</b></button>
 					</div>
 				</div>
 			</div>
 		</div>
 	</footer>
 
-	
+	<form action="#" method="post">
+		<input type="hidden" id="roomNo" value="${hosting.room_no}">
+		<input type="hidden" id="selectDate" value="">
+		<input type="hidden" id="time" value="">
+		<input type="hidden" id="allPrice" value=""> 
+	</form>
 
 
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -276,9 +329,10 @@
 	
 	var list;
 	var s_date="";
-	
+	var a_price = 0;
 	
 	$(".t_btn").attr("disabled",true);	//날짜를 선택하기전 시간 버튼 disabled
+	$(".price").html(a_price);			//처음부터 아무것도 선택되지 않을때 0표시
 	optionDisplay();
 // 	var disabledDays = ["2019-1-24","2019-1-25"];
 	
@@ -336,7 +390,7 @@
 // 		alert(f_date[1]);
 		var d_str = f_date[1];
 		var target = $(event.target);
-		var a_price = 0;
+		
 		var test = 1;
 		
 		if(target.hasClass("w3-grey")){
@@ -365,6 +419,16 @@
 			console.log(element);
 		});
 	})
+	
+	
+	$("#req-btn").on("click", function(){
+		$("#selectDate").attr("value", s_date);
+		$("#time").attr("value",list);
+		$("#allPrice").attr("value",a_price);
+		$("form").submit();
+	});
+	
+	
 	 
 /* option 표시 */
 //  	alert(typeof(${hosting.elevator})); //number
@@ -399,7 +463,84 @@
 			$("#cabinet").css("display", "none")
 		}
 	}
+	//comment 등록버튼
+	$("#insert_btn").on("click",function(event){
+		var content = $("#c_content").val();
+  
+		$.ajax({
+	        url:'CommentInsertController',
+	        type:'post',
+	        //session의 email받아서 넣어야함
+	        data:{"content":content, "room_no":num},
+	        success : function(data){
+	        	if(parseInt(data)==1){
+	        		$(".content-comment ul li:first-child").after(function(){
+	        			$(".content-comment ul li:first-child").after(function(){
+	        				return 	 '<li class="w3-bar">'
+	        						+'	<button class="w3-right w3-white w3-border-0 c-btn" id="${comment_no }">x</button>'
+	        						+'	<button class="w3-white w3-right w3-border-0 u_btn" id="${comment.comment_no}">'
+	        						+'		<img src="https://img.icons8.com/metro/26/000000/edit.png">'
+	        						+'	</button>'
+	        						+'	<div class="w3-bar-item item-img-div">'
+	        						+'		<img src="img/c1.PNG" class="w3-circle w3-hide-small c-profile-img">'
+	        						+'	</div>'
+	        						+'	<div class="w3-bar-item item-div">'
+	        						+'		<span>ddd</span><br> <span>(ddd@)</span>'
+	        						+'	</div>'
+	        						+'	<div class="item-content">'
+	        						+'		<span>'+content+'</span>'
+	        						+'	</div>'
+	        						+'</li>';
+	        			});
+	        			//동적 버튼 이벤트 추가해야함
+	        		});	
+	        	}
+	        }
+		}); 
+	});
+	//comment 삭제버튼
+	$(".c_btn").on("click", function(event){
+		var here = $(event.target);
+		
+		here.parent().css("display","none");
+		var commentNo = here.attr("id");
+		$.ajax({
+	        url:'CommentDeleteController',
+	        type:'post',
+	        data:{"comment_no":commentNo},
+	        success : function(data){
+	        	console.log(parseInt(data));
+	        }
+		});
+	});
+	
+	//comment 수정버튼
+	$(".u_btn").on("click", function(event){
+		var here = $(event.target);
+		var id = here.attr("id");
+		var content = $(".item-content span").text(); 
+		console.log(content);
+		$(".item-content").remove();
+		
+		
+		here.parent().append("<div class='item-input'><input type='text' "
+		+"class='w3-input' name='c_content' style='width:590px; display:inline-block;' /> "
+        +"<button class='w3-button w3-grey'>등록</button></div>");
+		here.prev().remove();
+		here.remove();
+		
+		/* var commentNo = here.attr("id");
+		$.ajax({
+	        url:'CommentDeleteController',
+	        type:'post',
+	        data:{"comment_no":commentNo},
+	        success : function(data){
+	        	console.log(parseInt(data));
+	        }
+		}); */
+	});
+	
 </script>
-<script src="js/test.js"></script>
+
 </body>
 </html>

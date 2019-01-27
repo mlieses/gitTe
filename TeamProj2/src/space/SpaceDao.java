@@ -135,8 +135,8 @@ public class SpaceDao {
 				hpDto.setPic2(rs.getString(30));
 				hpDto.setPic3(rs.getString(31));
 				hpDto.setPic4(rs.getString(32));
-				hpDto.setPic5(rs.getString(33));
 				list.add(hpDto);
+				
 				
 			}
 			con = ds.getConnection();
@@ -265,6 +265,39 @@ public class SpaceDao {
 			System.out.println("i : "+jarray.get(i));
 		}
 		return jarray;
+	}
+
+	public ArrayList<CommentDTO> getCommentList(int num) {
+		ArrayList<CommentDTO> comList = null;
+		CommentDTO commentDto;
+		try{
+			con = ds.getConnection();
+			String sql = "select c.comment_no, c.room_no, u.email, "
+						+"u.name, c.com_content, c.com_date "
+						+"from comment c join user u "
+						+"on u.email = c.email "
+						+"where room_no=? "
+						+"order by com_date desc limit 0, 10 ";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			rs = pstmt.executeQuery();
+			comList = new ArrayList<CommentDTO>();
+			while(rs.next()){
+				commentDto = new CommentDTO();
+				commentDto.setComment_no(rs.getInt(1));
+				commentDto.setEmail(rs.getString(3));
+				commentDto.setNick_name(rs.getString(4));
+				commentDto.setCom_content(rs.getString(5));
+				commentDto.setCom_date(rs.getDate(6));
+				comList.add(commentDto);
+			}
+		}catch(Exception e){
+			System.out.println("getCommentList에서 에러"+e);
+		}finally{
+			freeResource();
+		}
+		
+		return comList;
 	}
 	
 	

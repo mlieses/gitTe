@@ -2,13 +2,13 @@ package space;
 
 public class HAddressDTO {
 
-	int room_no;	//룸자동생성번호
-	String a_wdo;	//위도
-	String a_kdo;	//경도
-	String a_woo;	//우편번호
-	String a_address;//주소
-	String a_D_address;//상세주소
-	String a_etc_address;//참고항목
+	private int room_no;	//룸자동생성번호
+	private String a_wdo;	//위도
+	private String a_kdo;	//경도
+	private String a_woo;	//우편번호
+	private String a_address;//주소
+	private String a_D_address;//상세주소
+	private String a_etc_address;//참고항목
 	
 	
 	public int getRoom_no() {

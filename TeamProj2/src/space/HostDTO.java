@@ -1,12 +1,12 @@
 package space;
 
 public class HostDTO {
-	String host_id;
-	String email;
-	String host_pass;
-	String host_nic;
-	String host_phone;
-	int host_level;
+	private String host_id;
+	private String email;
+	private String host_pass;
+	private String host_nic;
+	private String host_phone;
+	private int host_level;
 	
 	
 	

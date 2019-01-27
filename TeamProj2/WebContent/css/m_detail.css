@@ -212,8 +212,40 @@
 }
 
 
-/* content-option 끝 */
+/* content-option 끝 ----------------------------------------------- */
+/* content-comment 시작----------------------------------------------- */
+.content-comment{
+	
+	width:100%;
+	height:auto;
+}
+.item-div{
+	margin:10px 0;
+	width:200px;
+}
+.item-img-div{
+	margin:10px 0;
+}
+.c-btn,.u_btn:hover{
+	cursor:pointer;
+}
+.c-profile-img{
+	width: 60px;
+	float: left;
+	margin-top: auto;
+}
+.item-input{
+	float: left;
+	width: 670px;
+	margin:20px 0;
+}
+.item-content{
+	float:left;
+	width:550px;
+	margin:20px 0;
+}
 
+/* content-comment 끝-----------------------------------------------*/
 /* footer content --------------------------------------------------- */
 .foot{
 	height:75px;
@@ -259,6 +291,8 @@
 #req-btn{
 	margin-top: 10px;
 }
+
+
 
 /* footer content --------------------------------------------------- */
 /*

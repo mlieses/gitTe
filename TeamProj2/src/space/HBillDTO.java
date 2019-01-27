@@ -2,9 +2,9 @@ package space;
 
 public class HBillDTO {
 	
-	int room_no;	//룸자동생성번호
-	int room_day;	//평일요금
-	int room_sum;	//주말요금
+	private int room_no;	//룸자동생성번호
+	private int room_day;	//평일요금
+	private int room_sum;	//주말요금
 	
 	
 	public int getRoom_no() {

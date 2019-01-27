@@ -1,17 +1,17 @@
 package space;
 
 public class HostingDTO {
-	String host_id;	//호스트 번호
-	int room_no;	//룸자동생성번호
-	String subject;	//제목
-	String room;	//공간타입
-	int people;		//수용인원수
-	int drink;		//기본음료제공
-	int elevator;	//엘리베이터
-	int toilet;		//화장실
-	int airconditioner;//에어컨
-	int heating;	//난방
-	int socket;		//콘센트
+	private String host_id;	//호스트 번호
+	private int room_no;	//룸자동생성번호
+	private String subject;	//제목
+	private String room;	//공간타입
+	private int people;		//수용인원수
+	private int drink;		//기본음료제공
+	private int elevator;	//엘리베이터
+	private int toilet;		//화장실
+	private int airconditioner;//에어컨
+	private int heating;	//난방
+	private int socket;		//콘센트
 	
 	
 	public String getHost_id() {
