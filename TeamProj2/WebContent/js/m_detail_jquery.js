@@ -261,7 +261,36 @@
 	//무한스크롤-----------------------------------
 	let isEnd = false;
 
-
+	let fetchList = function(){
+		if(isEnd == true){
+			return;
+		}
+		// 방명록 리스트를 가져올 때 시작 번호
+		// renderList 함수에서 html 코드를 보면 <li> 태그에 data-no 속성이 있는 것을 알 수 있다.
+		// ajax에서는 data- 속성의 값을 가져오기 위해 data() 함수를 제공.
+		let startNo = $(".c-btn").last().attr("id");
+	    console.log("코멘트 시작번호 "+startNo);
+		$.ajax({
+	    		url:"CommentSelectController" ,
+	    		type: "post",
+	    		data: {"startNo":startNo, "room_no":num},
+	    		success: function(result){
+	                    // 컨트롤러에서 가져온 방명록 리스트는 result.data에 담겨오도록 했다.
+	            		// 남은 데이터가 10개 이하일 경우 무한 스크롤 종료
+	            		/*let length = result.data.length;
+	
+	            		if( length < 10 ){
+	            			isEnd = true;
+	            		}
+	
+	            		$.each(result.data, function(index, vo){
+	            			renderList(false, vo);
+	            		})*/
+	            }
+	    });
+	}
+	
+	
 	$(window).scroll(function(){
 
 		let $window = $(this);
@@ -282,34 +311,7 @@
 	fetchList();
 
 
-	 let fetchList = function(){
-		if(isEnd == true){
-			return;
-		}
-		// 방명록 리스트를 가져올 때 시작 번호
-		// renderList 함수에서 html 코드를 보면 <li> 태그에 data-no 속성이 있는 것을 알 수 있다.
-		// ajax에서는 data- 속성의 값을 가져오기 위해 data() 함수를 제공.
-		let startNo = $("#list-guestbook li").last().data("no") || 0;
-	    
-		$.ajax({
-	    		url:"#" ,
-	    		type: "GET",
-	    		dataType: "json",
-	    		success: function(result){
-	                    // 컨트롤러에서 가져온 방명록 리스트는 result.data에 담겨오도록 했다.
-	            		// 남은 데이터가 10개 이하일 경우 무한 스크롤 종료
-	            		let length = result.data.length;
-	
-	            		if( length < 10 ){
-	            			isEnd = true;
-	            		}
-	
-	            		$.each(result.data, function(index, vo){
-	            			renderList(false, vo);
-	            		})
-	            }
-	    });
-	}
+	 
 
 
 

@@ -8,6 +8,11 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
+import space.CommentDTO;
+
 public class CommentDao {
 
 	
@@ -135,6 +140,41 @@ public class CommentDao {
 			freeResource();
 		}
 		return result;
+	}
+
+	public void getSelectComment(int startNo, int room_no) {
+		JsonObject json = new JsonObject();
+		
+		try{
+			con = ds.getConnection();
+			String sql = "select c.comment_no, c.room_no, u.email, "
+						+"u.name, c.com_content, c.com_date "
+						+"from comment c join user u "
+						+"on u.email = c.email "
+						+"where room_no=? "
+						+"order by com_date desc limit ?, ? ";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, room_no);
+			pstmt.setInt(2, startNo);
+			pstmt.setInt(3, startNo+10);
+			rs = pstmt.executeQuery();
+			while(rs.next()){
+				
+				json.addProperty("comment_no", rs.getInt(1));
+				json.addProperty("room_no", room_no);
+				json.addProperty("email", rs.getString(3));
+				json.addProperty("name", rs.getString(4));
+				json.addProperty("com_content", rs.getString(5));
+				json.addProperty("com_date", rs.getDate(6).toString());
+				
+			}
+			
+		}catch(Exception e){
+			System.out.println("getSelectComment");
+		}finally{
+			freeResource();
+		}
+		
 	}
 	
 	
