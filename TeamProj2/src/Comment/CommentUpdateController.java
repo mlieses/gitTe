@@ -10,22 +10,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
-@WebServlet("/CommentInsertController")
-public class CommentInsertController extends HttpServlet {
-
+@WebServlet("/CommentUpdateController")
+public class CommentUpdateController extends HttpServlet {
+	
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("CommentInsertController 들어옴");
+		String comment_no = request.getParameter("comment_no");
 		String content = request.getParameter("content");
-		int room_no = Integer.parseInt(request.getParameter("room_no"));
-		//email받아오기
-		//String email = request.getParameter("email");
 		CommentDao cDao = new CommentDao();
-		int commentNo = cDao.insertComment(room_no, content);
-//		int result = cDao.insertComment(room_no, email, content);
-		request.setAttribute("commentNo", commentNo);
+		int result = cDao.updateComment(comment_no, content);
 		
 		PrintWriter out = response.getWriter();
-		out.println(commentNo);
+		out.print(result);
 	}
 
 }

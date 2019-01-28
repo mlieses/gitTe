@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 
@@ -16,7 +17,7 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+
 
 
 
@@ -178,6 +179,7 @@ public class SpaceDao {
 				Date date = Date.valueOf(LocalDate.now().plusDays(i));
 				System.out.println(date);
 				SimpleDateFormat fo = new SimpleDateFormat("yyyy-M-dd");
+				
 					con = ds.getConnection();
 					String sql = "select sum(bt.t10), sum(bt.t11), sum(bt.t12), sum(bt.t13), "
 								+"sum(bt.t14),sum(bt.t15), sum(bt.t16), sum(bt.t17), "

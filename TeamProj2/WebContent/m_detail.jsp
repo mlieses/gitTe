@@ -262,8 +262,8 @@
 					
 					<li class="w3-bar">
 						
-						<button class="w3-right w3-white w3-border-0 c-btn${comment.comment_no}" id="${comment.comment_no }">x</button>
-						<button class="w3-white w3-right w3-border-0 u_btn" id="${comment.comment_no}">
+						<button class="w3-right w3-white w3-border-0 c-btn ${comment.comment_no}" id="${comment.comment_no }">x</button>
+						<button class="w3-white w3-right w3-border-0 u-btn ${comment.comment_no}" id="${comment.comment_no}">
 							<img src="https://img.icons8.com/metro/26/000000/edit.png">
 						</button>
 						<div class="w3-bar-item item-img-div">
@@ -272,7 +272,7 @@
 						<div class="w3-bar-item item-div">
 							<span>${comment.nick_name}</span><br> <span>(${comment.email})</span>
 						</div>
-						<div class="item-content">
+						<div class="item-content upContent${comment.comment_no}">
 							<span>${comment.com_content}</span>
 						</div>
 					</li>
@@ -320,227 +320,52 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="js/m_detail_slide.js"></script>
 <script type="text/javascript">
-	var num = '${hosting.room_no}';
-	var disabledDays = [];
+	var num = '${hosting.room_no}';//공간번호
+	var disabledDays = [];	//예약이 불가능한 날짜 리턴
 	var i =0;
+	
+	//예약 불가능한 날짜 DB에서 받아서 배열에 SET해준다
 	<c:forEach items="${noList}" var="item1">
-		disabledDays[i] = "${item1}";
+		disabledDays.push("${item1}");
 	</c:forEach>
 	
-	var list;
-	var s_date="";
-	var a_price = 0;
+	//옵션 db에서 받아서 js에 저장
+	var elevator = '${hosting.elevator}';
+	var socket = '${hosting.socket}';
+	var airconditioner='${hosting.airconditioner}';
+	var heating = '${hosting.heating}';
+	var toilet = '${hosting.toilet}';
+	var parking = '${option.parking}';
+	var wifi = '${option.wifi}';
+	var projector = '${option.projector}';
+	var laptop = '${option.laptop}';	
+	var cabinet = '${option.cabinet}';
 	
-	$(".t_btn").attr("disabled",true);	//날짜를 선택하기전 시간 버튼 disabled
-	$(".price").html(a_price);			//처음부터 아무것도 선택되지 않을때 0표시
-	optionDisplay();
+	
+	
+	var list;		//시간선택한 리스트
+	var s_date="";	//DatePicker에 선택한 날짜
+	var a_price = 0;// 총요금
+	
+	var day_price = parseInt(${bill.room_sum}); //평일 요금
+	var sun_price = parseInt(${bill.room_day});	//주말 요금
+	
+	//$(".t_btn").attr("disabled",true);	//날짜를 선택하기전 시간 버튼 disabled
+	//$(".price").html(a_price);			//처음부터 아무것도 선택되지 않을때 0표시
+	//optionDisplay();
 // 	var disabledDays = ["2019-1-24","2019-1-25"];
-	
-	function disableAllTheseDays(date) {
-	    var m = date.getMonth(), d = date.getDate(), y = date.getFullYear();
-	    for (i = 0; i < disabledDays.length; i++) {
-	        if($.inArray(y + '-' +(m+1) + '-' + d,disabledDays) != -1) {
-	            return [false];
-	        }
-	    }
-	    return [true];
-	}
-	
-	$("#datepicker1").datepicker({
-		minDate: 0,
-		maxDate: 7,
-		dateFormat: 'yy-mm-dd D',
-		beforeShowDay: disableAllTheseDays,
-		onSelect: function(date) {
-			
-			s_date=date;
 
-			nonBtn(date)
-// 	         alert(date);
-	    }   
+// 	var hosting = new Array();
+// 	hosting = ${hosting};
+// 	console.log(hosting.elevator);
 
-	});
-	
-	 function nonBtn(date){
-		 $(".t_btn").attr("disabled",false);	
-		 $(".t_btn").removeClass("w3-grey");	//시간버튼 클릭시 변경되는 색상 모두 제거
-		 	list = new Array();
-		 $.ajax({
-	        url:'TimeSpaceController',
-	        type:'post',
-	        data:{"date":date, "room_no":num},
-	        success : function(data){
-	        
-	        	var json = JSON.parse(data);
-	        	
-// 	        	$(".t_btn").attr("disabled",false);
-	        	for(var i=1;i<13;i++){
-	        		if(json[i]==1){
-	        			$(".t_btn").eq(i).attr("disabled",true);
-	        		}
-	        	}
-	        }
-	     }); 
-	 }
-	 
-	 /*시간 버튼 클릭 했을때 값 추출*/
-	$(".t_btn").on("click", function(event){
-		var f_date = [];
-		f_date = s_date.split(" ");
-// 		alert(f_date[1]);
-		var d_str = f_date[1];
-		var target = $(event.target);
-		
-		var test = 1;
-		
-		if(target.hasClass("w3-grey")){
-			var num = list.indexOf(target.attr("id"));
-			list.pop(num);
-			target.removeClass("w3-grey");
-		}else{
-			target.addClass("w3-grey");
-		 	list.push(target.attr("id"));
-		}
-		
-		if(d_str=="Sat" || d_str=="Sun"){
-			var price = parseInt(${bill.room_sum});
-			var timeNum = list.length;
-			a_price = String(price*timeNum);
-		}else{
-			var price = parseInt(${bill.room_day});
-			var timeNum = list.length;
-			a_price = String(price*timeNum);
-		}
-		$(".price").html(a_price);
-		console.log("start");
-// 		 console.log(list.length);
-		
-		list.forEach(function(element) {
-			console.log(element);
-		});
-	})
+
 	
 	
-	$("#req-btn").on("click", function(){
-		$("#selectDate").attr("value", s_date);
-		$("#time").attr("value",list);
-		$("#allPrice").attr("value",a_price);
-		$("form").submit();
-	});
 	
-	
-	 
-/* option 표시 */
-//  	alert(typeof(${hosting.elevator})); //number
-	function optionDisplay(){
-		//무료
-		if(${hosting.elevator}==0){
-			$("#elevator").css("display", "none")
-		}
-		if(${hosting.toilet}==0){
-			$("#toilet").css("display", "none")
-		}
-		if(${hosting.airconditioner}==0){
-			$("#airconditioner").css("display", "none")
-		}
-		if(${hosting.socket}==0){
-			$("#socket").css("display", "none")
-		}
-		//유료옵션
-		if(${option.parking}==0){
-			$("#parking").css("display", "none")
-		}
-		if(${option.wifi}==0){
-			$("#wifi").css("display", "none")
-		}
-		if(${option.projector}==0){
-			$("#projector").css("display", "none")
-		}
-		if(${option.laptop}==0){
-			$("#laptop").css("display", "none")
-		}
-		if(${option.cabinet}==0){
-			$("#cabinet").css("display", "none")
-		}
-	}
-	//comment 등록버튼
-	$("#insert_btn").on("click",function(event){
-		var content = $("#c_content").val();
-  
-		$.ajax({
-	        url:'CommentInsertController',
-	        type:'post',
-	        //session의 email받아서 넣어야함
-	        data:{"content":content, "room_no":num},
-	        success : function(data){
-	        	if(parseInt(data)==1){
-	        		$(".content-comment ul li:first-child").after(function(){
-	        			$(".content-comment ul li:first-child").after(function(){
-	        				return 	 '<li class="w3-bar">'
-	        						+'	<button class="w3-right w3-white w3-border-0 c-btn" id="${comment_no }">x</button>'
-	        						+'	<button class="w3-white w3-right w3-border-0 u_btn" id="${comment.comment_no}">'
-	        						+'		<img src="https://img.icons8.com/metro/26/000000/edit.png">'
-	        						+'	</button>'
-	        						+'	<div class="w3-bar-item item-img-div">'
-	        						+'		<img src="img/c1.PNG" class="w3-circle w3-hide-small c-profile-img">'
-	        						+'	</div>'
-	        						+'	<div class="w3-bar-item item-div">'
-	        						+'		<span>ddd</span><br> <span>(ddd@)</span>'
-	        						+'	</div>'
-	        						+'	<div class="item-content">'
-	        						+'		<span>'+content+'</span>'
-	        						+'	</div>'
-	        						+'</li>';
-	        			});
-	        			//동적 버튼 이벤트 추가해야함
-	        		});	
-	        	}
-	        }
-		}); 
-	});
-	//comment 삭제버튼
-	$(".c_btn").on("click", function(event){
-		var here = $(event.target);
-		
-		here.parent().css("display","none");
-		var commentNo = here.attr("id");
-		$.ajax({
-	        url:'CommentDeleteController',
-	        type:'post',
-	        data:{"comment_no":commentNo},
-	        success : function(data){
-	        	console.log(parseInt(data));
-	        }
-		});
-	});
-	
-	//comment 수정버튼
-	$(".u_btn").on("click", function(event){
-		var here = $(event.target);
-		var id = here.attr("id");
-		var content = $(".item-content span").text(); 
-		console.log(content);
-		$(".item-content").remove();
-		
-		
-		here.parent().append("<div class='item-input'><input type='text' "
-		+"class='w3-input' name='c_content' style='width:590px; display:inline-block;' /> "
-        +"<button class='w3-button w3-grey'>등록</button></div>");
-		here.prev().remove();
-		here.remove();
-		
-		/* var commentNo = here.attr("id");
-		$.ajax({
-	        url:'CommentDeleteController',
-	        type:'post',
-	        data:{"comment_no":commentNo},
-	        success : function(data){
-	        	console.log(parseInt(data));
-	        }
-		}); */
-	});
 	
 </script>
+<script src="js/m_detail_jquery.js"></script>
 
 </body>
 </html>

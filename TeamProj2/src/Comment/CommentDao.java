@@ -76,20 +76,29 @@ public class CommentDao {
 	}
 
 	public int insertComment(int room_no, String content) {
-		int result = 0;
+		int commentNo = 0;
 		try{
 			con = ds.getConnection();
 			String sql ="insert into comment values(0, ?, 'ddd@gmail.com', ?, now())";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, room_no);
 			pstmt.setString(2, content);
-			result = pstmt.executeUpdate();
+			pstmt.executeUpdate();
+			
+			con = ds.getConnection();
+			sql ="select max(comment_no) from comment";
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if(rs.next()){
+				commentNo=rs.getInt(1);
+			}
+			
 		}catch(Exception e){
 			System.out.println("insertComment에서 오류"+e);
 		}finally{
 			freeResource();
 		}		
-		return result;
+		return commentNo;
 	}
 	/* email받을때 
 	public int insertComment(int room_no, String email, String content) {
@@ -109,6 +118,24 @@ public class CommentDao {
 		}		
 		return result;
 	}*/
+
+	public int updateComment(String comment_no, String content) {
+		int result = 0;
+		try{
+			con = ds.getConnection();
+			String sql = "update comment set com_content=? where comment_no=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, content);
+			pstmt.setInt(2, Integer.parseInt(comment_no));
+			result = pstmt.executeUpdate();
+			
+		}catch(Exception e){
+			System.out.println("updateComment에서 오류"+e);
+		}finally{
+			freeResource();
+		}
+		return result;
+	}
 	
 	
 	
