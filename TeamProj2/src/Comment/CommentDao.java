@@ -8,10 +8,9 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
-import space.CommentDTO;
 
 public class CommentDao {
 
@@ -42,6 +41,7 @@ public class CommentDao {
 		if(rs != null){
 			try {
 				rs.close();
+				System.out.println("rs해제");
 			} catch (Exception e) {
 				// TODO: handle exception
 				e.printStackTrace();
@@ -49,6 +49,7 @@ public class CommentDao {
 		}if(pstmt != null){
 			try {
 				pstmt.close();
+				System.out.println("pstmt해제");
 			} catch (Exception e) {
 				// TODO: handle exception
 				e.printStackTrace();
@@ -56,6 +57,7 @@ public class CommentDao {
 		}if(con != null){
 			try {
 				con.close();
+				System.out.println("con해제");
 			} catch (Exception e) {
 				// TODO: handle exception
 				e.printStackTrace();
@@ -142,41 +144,52 @@ public class CommentDao {
 		return result;
 	}
 
-	public void getSelectComment(int startNo, int room_no) {
-		JsonObject json = new JsonObject();
-		
+	public JSONObject getSelectComment(int startNo, int room_no) {
+		JSONObject aJson = new JSONObject();
+		JSONObject json = null;
 		try{
 			con = ds.getConnection();
 			String sql = "select c.comment_no, c.room_no, u.email, "
 						+"u.name, c.com_content, c.com_date "
 						+"from comment c join user u "
-						+"on u.email = c.email "
-						+"where room_no=? "
-						+"order by com_date desc limit ?, ? ";
+						+"on c.email = u.email "
+						+"where c.room_no=? and c.comment_no <=? "
+						+"order by c.com_date desc limit 0, 10 ";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, room_no);
 			pstmt.setInt(2, startNo);
-			pstmt.setInt(3, startNo+10);
 			rs = pstmt.executeQuery();
 			while(rs.next()){
+//				comment = new CommentDTO();
+//				comment.setComment_no(rs.getInt(1));
+//				comment.setRoom_no(room_no);
+//				comment.setEmail(rs.getString(3));
+//				comment.setNick_name(rs.getString(4));
+//				comment.setCom_content(rs.getString(5));
+//				comment.setCom_date(rs.getDate(6));
+//				jArray.add(comment);
 				
-				json.addProperty("comment_no", rs.getInt(1));
-				json.addProperty("room_no", room_no);
-				json.addProperty("email", rs.getString(3));
-				json.addProperty("name", rs.getString(4));
-				json.addProperty("com_content", rs.getString(5));
-				json.addProperty("com_date", rs.getDate(6).toString());
+				json = new JSONObject();
+				
+				json.put("comment_no", String.valueOf(rs.getInt(1)));
+				json.put("room_no", String.valueOf(room_no));
+				json.put("email", rs.getString(3));
+				json.put("nick_name", rs.getString(4));
+				json.put("com_content", rs.getString(5));
+				json.put("com_date", rs.getDate(6).toString());
+				
+				aJson.put("list", json);
 				
 			}
 			
 		}catch(Exception e){
-			System.out.println("getSelectComment");
+			System.out.println("getSelectComment에러"+e);
 		}finally{
 			freeResource();
 		}
+		return aJson;
 		
 	}
-	
 	
 	
 	

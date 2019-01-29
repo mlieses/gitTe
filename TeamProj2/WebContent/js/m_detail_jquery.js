@@ -34,7 +34,7 @@
 	        type:'post',
 	        data:{"date":date, "room_no":num},
 	        success : function(data){
-	        
+	        	
 	        	var json = JSON.parse(data);
 	        	
 // 	        	$(".t_btn").attr("disabled",false);
@@ -261,7 +261,30 @@
 	//무한스크롤-----------------------------------
 	let isEnd = false;
 
-	let fetchList = function(){
+
+	function renderList(comment){
+        // 리스트 html을 정의
+        let html = 	 '<li class="w3-bar">'
+					+'	<button class="w3-right w3-white w3-border-0 c-btn delete'+comment.comment_no+'" id="'+comment.comment_no+'">x</button>'
+					+'	<button class="w3-white w3-right w3-border-0 u-btn update'+comment.comment_no+'" id="'+comment.comment_no+'">'
+					+'		<img src="https://img.icons8.com/metro/26/000000/edit.png">'
+					+'	</button>'
+					+'	<div class="w3-bar-item item-img-div">'
+					+'		<img src="img/c1.PNG" class="w3-circle w3-hide-small c-profile-img">'
+					+'	</div>'
+					+'	<div class="w3-bar-item item-div">'
+					+'		<span>ddd</span><br> <span>(ddd@)</span>'
+					+'	</div>'
+					+'	<div class="item-content upContent'+comment.comment_no+'">'
+					+'		<span>'+comment.com_content+'</span>'
+					+'	</div>'
+					+'</li>';
+		$(".content-comment ul li:last-child").after(html);
+	}
+
+
+	
+	function fetchList(){
 		if(isEnd == true){
 			return;
 		}
@@ -273,23 +296,21 @@
 		$.ajax({
 	    		url:"CommentSelectController" ,
 	    		type: "post",
+	    		datatype:"json",
 	    		data: {"startNo":startNo, "room_no":num},
-	    		success: function(result){
-	                    // 컨트롤러에서 가져온 방명록 리스트는 result.data에 담겨오도록 했다.
+	    		success: function(data){
+	                    // 컨트롤러에서 가져온 방명록 리스트는data에 담겨오도록 했다.
 	            		// 남은 데이터가 10개 이하일 경우 무한 스크롤 종료
-	            		/*let length = result.data.length;
-	
 	            		if( length < 10 ){
 	            			isEnd = true;
 	            		}
-	
-	            		$.each(result.data, function(index, vo){
-	            			renderList(false, vo);
-	            		})*/
+	            		$.each(data.list, function(index, comment){
+	            			renderList(comment);
+	            		});
 	            }
 	    });
 	}
-	
+
 	
 	$(window).scroll(function(){
 
@@ -300,15 +321,15 @@
 
         console.log("documentHeight:" + documentHeight + " | scrollTop:" +
         			scrollTop + " | windowHeight: " + windowHeight );
-
+        console.log("documentHeight:"+ documentHeight +"plus"+(scrollTop+documentHeight))
         // scrollbar의 thumb가 바닥 전 10px까지 도달 하면 리스트를 가져온다.
         if( scrollTop + windowHeight + 10 > documentHeight ){
         	
         	fetchList();
         }
-	})
+	});
 
-	fetchList();
+	
 
 
 	 
