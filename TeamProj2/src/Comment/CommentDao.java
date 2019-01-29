@@ -14,10 +14,10 @@ import org.json.simple.JSONObject;
 
 public class CommentDao {
 
-	  
+	
 	private Connection con;
 	private PreparedStatement pstmt;
-	private ResultSet rs;
+	private ResultSet rs; 
 	
 	// 커넥션 풀을 담을 변수 선언
 	DataSource ds = null;
@@ -144,8 +144,8 @@ public class CommentDao {
 		return result;
 	}
 
-	public JSONObject getSelectComment(int startNo, int room_no) {
-		JSONObject aJson = new JSONObject();
+	public JSONArray getSelectComment(int startNo, int room_no) {
+		JSONArray aJson = new JSONArray();
 		JSONObject json = null;
 		try{
 			con = ds.getConnection();
@@ -178,7 +178,7 @@ public class CommentDao {
 				json.put("com_content", rs.getString(5));
 				json.put("com_date", rs.getDate(6).toString());
 				
-				aJson.put("list", json);
+				aJson.add(json);
 				
 			}
 			
