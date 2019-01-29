@@ -14,7 +14,7 @@ import org.json.simple.JSONObject;
 
 public class CommentDao {
 
-	
+	  
 	private Connection con;
 	private PreparedStatement pstmt;
 	private ResultSet rs;
@@ -153,7 +153,7 @@ public class CommentDao {
 						+"u.name, c.com_content, c.com_date "
 						+"from comment c join user u "
 						+"on c.email = u.email "
-						+"where c.room_no=? and c.comment_no <=? "
+						+"where c.room_no=? and c.comment_no <? "
 						+"order by c.com_date desc limit 0, 10 ";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, room_no);
