@@ -286,6 +286,13 @@
 	
 <!-- option content ------------------------------------------------->	
 
+<!-- review bbs ----------------------------------------------------->
+
+
+
+
+<!-- review bbs ----------------------------------------------------->
+
 <!-- footer include -->
 
 <!-- footer content ------------------------------------------------->	
@@ -296,7 +303,8 @@
 				<div class="w3-col m10 foot-price">
 					<div class="price-div">
 						<div class="price">
-							
+							<span class="w3-tag w3-xxlarge">￦</span>
+							<span class="w3-tag w3-xxlarge">6000</span>
 						</div>
 					</div>
 				</div>
@@ -351,10 +359,8 @@
 	var day_price = parseInt(${bill.room_sum} ); //평일 요금
 	var sun_price = parseInt(${bill.room_day} );	//주말 요금
 	
-	//$(".t_btn").attr("disabled",true);	//날짜를 선택하기전 시간 버튼 disabled
-	//$(".price").html(a_price);			//처음부터 아무것도 선택되지 않을때 0표시
-	//optionDisplay();
-// 	var disabledDays = ["2019-1-24","2019-1-25"];
+	
+
 
 // 	var hosting = new Array();
 // 	hosting = ${hosting};
