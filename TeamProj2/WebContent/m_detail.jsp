@@ -38,9 +38,14 @@
 <c:set var="option" value="${list['3']}"></c:set>
 <c:set var="pic" value="${list['4']}"></c:set>
 <c:set var="host" value="${list['5']}"></c:set>
-<c:set var="commentList" value="${commentList}"></c:set>
+<c:set var="commentList" value="${commentList}"/>
 <c:set var="noList" value="${noList}"></c:set>
-
+<c:set var="reviewList" value="${reviewList}"/>
+<script>
+	
+	console.log("host는");
+	console.log('${address}');
+</script>
 <jsp:include page="Top.jsp"/>
 
 
@@ -115,7 +120,7 @@
 			<div class="w3-row" style="height:100%;">
 				<div class="w3-threequarter w3-content" style="height:100%;">
 					<div class="w3-content header-small">
-						<h4>${hosting.room}</h4>
+						<h4><!--  ${hosting.room_type} --></h4>
 					</div>
 					<div class="w3-content header-subject">
 						${hosting.subject}
@@ -245,7 +250,9 @@
 		
 <!-- review bbs ----------------------------------------------------->
 <div class="w3-content">
+	
 	<table class="w3-table-all w3-hoverable">
+	
     <thead>
       <tr class="w3-light-grey">
         <th width="5%">no</th>
@@ -255,14 +262,15 @@
         <th width="10%">날짜</th>
       </tr>
     </thead>
-    <tr>
-      <td>Jill</td>
-      <td>Smith</td>
-      <td>50</td>
-      <td>50</td>
-      <td>50</td>
-    </tr>
-    
+    <c:forEach var="review" items="${reviewList}">
+	    <tr>
+	      <td>${review.review_no}</td>
+	      <td>${review.nic_name}<br>(${review.email})</td>
+	      <td>${review.re_point}</td>
+	      <td>${review.re_content}</td>
+	      <td>${review.re_date}</td>
+	    </tr>
+    </c:forEach>
   </table>
 </div>
 
@@ -379,8 +387,8 @@
 	var s_date="";	//DatePicker에 선택한 날짜
 	var a_price = 0;// 총요금
 	
-	var day_price = parseInt(${bill.room_sum} ); //평일 요금
-	var sun_price = parseInt(${bill.room_day} );	//주말 요금
+	var day_price = parseInt(${bill.weekday} ); //평일 요금
+	var sun_price = parseInt(${bill.holiday} );	//주말 요금
 	
 	
 

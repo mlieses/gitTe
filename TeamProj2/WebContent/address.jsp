@@ -37,14 +37,16 @@
 //                        alert(result.y);
 // 						console.log(result.x);
 // 						console.log(result.y);
+                        document.write(result.y+", ");
                         document.write(result.x);
-                        document.write(result.y);
                     }
                 });
             }
         }).open();
     }
 </script>
+
+
 
 </body>
 </html>

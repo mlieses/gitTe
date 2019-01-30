@@ -42,6 +42,11 @@ public class SpaceController extends HttpServlet {
 		List noList = dao.getNoDate(num);
 		request.setAttribute("noList", noList);
 		
+		//review를 가져온다
+		ArrayList<ReviewDTO> reviewList = dao.getReviewList(num);
+		request.setAttribute("reviewList", reviewList);
+		
+		
 		RequestDispatcher dis = request.getRequestDispatcher("m_detail.jsp");
 		dis.forward(request, response);
 	}

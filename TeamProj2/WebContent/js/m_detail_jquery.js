@@ -30,7 +30,8 @@
 	        	var json = JSON.parse(data);
 	        	
 // 	        	$(".t_btn").attr("disabled",false);
-	        	for(var i=1;i<13;i++){
+	        	for(var i=0;i<12;i++){
+	        		console.log("j i : "+json[i]);
 	        		if(json[i]==1){
 	        			$(".t_btn").eq(i).attr("disabled",true);
 	        		}
@@ -367,7 +368,7 @@
 	    });
 	}
 	
-
+/*
 	
 	$(window).scroll(function(){
 
@@ -390,14 +391,11 @@
         }
 	});
 
-	
-
-
-	 
+	*/
 	//없는 옵션 가림
 	optionDisplay();
 	
-
+	
 	
 	
 	
