@@ -248,11 +248,11 @@
 	<table class="w3-table-all w3-hoverable">
     <thead>
       <tr class="w3-light-grey">
-        <th>글번호</th>
-        <th>작성자</th>
-        <th>별점</th>
-        <th>글내용</th>
-        <th>날짜</th>
+        <th width="5%">no</th>
+        <th width="10%">작성자</th>
+        <th width="5%">별점</th>
+        <th width="70%">글내용</th>
+        <th width="10%">날짜</th>
       </tr>
     </thead>
     <tr>
