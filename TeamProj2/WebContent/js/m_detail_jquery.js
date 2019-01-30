@@ -51,7 +51,7 @@
 				s_date=date;
 
 				nonBtn(date)
-//	 	         alert(date);
+	 	         alert(date);
 		    }   
 
 		});

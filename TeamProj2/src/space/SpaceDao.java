@@ -179,11 +179,10 @@ public class SpaceDao {
 		return list;
 	}
 
-	public ArrayList getNoDate(int num) {
-		ArrayList noList = new ArrayList();
-		try{
-			for(int i=0;i<7;i++){
-				
+	public ArrayList<String> getNoDate(int num) {
+		ArrayList<String> noList = new ArrayList<String>();
+		for(int i=0;i<7;i++){
+			try{
 				Date date = Date.valueOf(LocalDate.now().plusDays(i));
 				System.out.println(date);
 				SimpleDateFormat fo = new SimpleDateFormat("yyyy-M-dd");
@@ -209,8 +208,9 @@ public class SpaceDao {
 								break;
 							}
 							if(j==12){
-								System.out.println(date);
+								System.out.println("예약이 다찬 날짜 : "+date);
 								noList.add(fo.format(date));
+								
 							}
 						}
 						
@@ -219,18 +219,18 @@ public class SpaceDao {
 //						noList.add(dd);
 			//			System.out.println(dd);
 					}
-					freeResource();
+					
+			
+			}catch(Exception e){
+				System.out.println("getNoDate에서 에러"+e);
+			}finally{
+				freeResource();
 			}
-		}catch(Exception e){
-			System.out.println("getNoDate에서 에러"+e);
-		}finally{
-			freeResource();
 		}
-		
 		return noList;
 	}
 
-	public JSONArray getTime(Date selectDate, int roomNo) {
+	public JSONArray getTime(String selectDate, int roomNo) {
 		
 		JSONArray jarray = new JSONArray();
 		
@@ -246,7 +246,7 @@ public class SpaceDao {
 						+"on b.book_no = bt.book_no "
 						+"and b.book_date = bt.book_date";
 			pstmt = con.prepareStatement(sql);
-			pstmt.setDate(1, selectDate);
+			pstmt.setString(1, selectDate);
 			pstmt.setInt(2, roomNo);
 			rs = pstmt.executeQuery();
 			if(rs.next()){
@@ -272,7 +272,7 @@ public class SpaceDao {
 			freeResource();
 		}
 		for(int i=0;i<jarray.size();i++){
-			System.out.println("i : "+jarray.get(i));
+			System.out.println(i+" : "+jarray.get(i));
 		}
 		return jarray;
 	}

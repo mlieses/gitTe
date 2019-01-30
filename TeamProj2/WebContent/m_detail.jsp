@@ -43,8 +43,8 @@
 <c:set var="reviewList" value="${reviewList}"/>
 <script>
 	
-	console.log("host는");
-	console.log('${address}');
+	console.log("noList는");
+	console.log('${noList[0]}');
 </script>
 <jsp:include page="Top.jsp"/>
 
@@ -120,7 +120,7 @@
 			<div class="w3-row" style="height:100%;">
 				<div class="w3-threequarter w3-content" style="height:100%;">
 					<div class="w3-content header-small">
-						<h4><!--  ${hosting.room_type} --></h4>
+						<h4>${hosting.room_type}</h4>
 					</div>
 					<div class="w3-content header-subject">
 						${hosting.subject}
