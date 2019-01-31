@@ -24,7 +24,7 @@
 	padding:0;
 }
 </style>
-
+//
 <!-- 카카오 맵 script -->
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=030fe73ff2f443d44661c605e8a0667f"></script>
 <!-- jstl -->
@@ -41,10 +41,11 @@
 <c:set var="commentList" value="${commentList}"/>
 <c:set var="noList" value="${noList}"></c:set>
 <c:set var="reviewList" value="${reviewList}"/>
+<c:set var="session" value="${sessionScope.udto}"/>
 <script>
 	
 	console.log("noList는");
-	console.log('${noList[0]}');
+	console.log('${noList[3]}');
 </script>
 <jsp:include page="Top.jsp"/>
 

@@ -11,12 +11,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 import Comment.CommentDTO;
-import userDB.UserDAO;
 
 @WebServlet("/m_detail")
 public class SpaceController extends HttpServlet {
-	
+
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPro(request, response);
 	}

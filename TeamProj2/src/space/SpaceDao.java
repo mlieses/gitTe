@@ -185,8 +185,10 @@ public class SpaceDao {
 			try{
 				Date date = Date.valueOf(LocalDate.now().plusDays(i));
 				System.out.println(date);
-				SimpleDateFormat fo = new SimpleDateFormat("yyyy-M-dd");
-				
+				SimpleDateFormat fo = new SimpleDateFormat("yyyy-M-d");
+//				System.out.println("날짜 포맷");
+//				String dd ="2019-12-01";
+//				System.out.println(fo.format(Date.valueOf(dd)));
 					con = ds.getConnection();
 					String sql = "select sum(bt.t10), sum(bt.t11), sum(bt.t12), sum(bt.t13), "
 								+"sum(bt.t14),sum(bt.t15), sum(bt.t16), sum(bt.t17), "
@@ -208,7 +210,7 @@ public class SpaceDao {
 								break;
 							}
 							if(j==12){
-								System.out.println("예약이 다찬 날짜 : "+date);
+								System.out.println("예약이 다찬 날짜 : "+fo.format(date));
 								noList.add(fo.format(date));
 								
 							}
@@ -343,8 +345,23 @@ public class SpaceDao {
 		 }catch(Exception e){
 			 System.out.println("getReviewList에서 에러"+e);
 			 
+		 }finally{
+			 freeResource();
 		 }
 		return reviewList;
+	}
+
+	public int getBoardCount() {
+		try {
+			con = ds.getConnection();
+			
+		} catch (SQLException e) {
+			System.out.println("getBoardCount"+e);
+		}finally{
+			freeResource();
+		}
+		
+		return 0;
 	}
 	
 	

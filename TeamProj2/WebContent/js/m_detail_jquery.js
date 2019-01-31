@@ -1,4 +1,4 @@
-// 	var disabledDays = ["2019-1-24","2019-1-25"];ddasdasd
+// 	var disabledDays = ["2019-2-2","2019-1-3"];
 	$(".t_btn").attr("disabled",true);	//날짜를 선택하기전 시간 버튼 disabled
 //	$(".price").html(a_price);			//처음부터 아무것도 선택되지 않을때 0표시
 	
@@ -6,9 +6,11 @@
 	
 	//예약 불가능한 날짜 체크
 	function disableAllTheseDays(date) {
+		
 	    var m = date.getMonth(), d = date.getDate(), y = date.getFullYear();
 	    for (i = 0; i < disabledDays.length; i++) {
 	        if($.inArray(y + '-' +(m+1) + '-' + d,disabledDays) != -1) {
+	        	console.log("예약불가능한 날짜는 : "+disabledDays);
 	            return [false];
 	        }
 	    }
@@ -51,7 +53,7 @@
 				s_date=date;
 
 				nonBtn(date)
-	 	         alert(date);
+//	 	         alert(date);
 		    }   
 
 		});
