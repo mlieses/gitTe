@@ -12,8 +12,7 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <!-- google icons -->
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<!-- css -->
-<link rel="stylesheet" href="css/m_detail.css">
+<!-- css --><link rel="stylesheet" href="css/m_detail.css">
 <!-- jqeury -->
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <!-- JQuery UI Datepicker -->
