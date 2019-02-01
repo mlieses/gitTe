@@ -24,7 +24,7 @@
 	padding:0;
 }
 </style>
-//
+
 <!-- 카카오 맵 script -->
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=030fe73ff2f443d44661c605e8a0667f"></script>
 <!-- jstl -->
