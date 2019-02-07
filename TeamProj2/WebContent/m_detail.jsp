@@ -41,11 +41,7 @@
 <c:set var="noList" value="${noList}"></c:set>
 <c:set var="reviewList" value="${reviewList}"/>
 <c:set var="session" value="${sessionScope.udto}"/>
-<script>
-	
-	console.log("noList는");
-	console.log('${noList[3]}');
-</script>
+
 <jsp:include page="Top.jsp"/>
 
 
@@ -297,9 +293,7 @@
 			        	<button class="w3-button w3-grey" id="insert_btn">등록</button>
 			      	</div>
 				</li>
-				<!-- session 으로 email을 들고와서 비교 
- 						<c:if test="${comment.email eq sessionEmail }" ></c:if>
- 						 --> 
+
 				<c:forEach var="comment" items="${commentList}">
 					
 					<li class="w3-bar">
@@ -406,7 +400,7 @@
 
 	
 	var email = "${session.email}";				//세션영역의 email값
-	if(email=="" or email==null){
+	if(email=="" || email==null){
 		$("#insert_btn").addClass("w3-disabled");	//
 	}
 	
