@@ -205,7 +205,7 @@ public class SpaceDao {
 					rs = pstmt.executeQuery();
 					if(rs.next()){
 						for(int j=1;j<13;j++){
-							System.out.println("rs.get()"+j+"번째 값: "+rs.getInt(j));
+//							System.out.println("rs.get()"+j+"번째 값: "+rs.getInt(j));
 							if(rs.getInt(j)==0){
 								break;
 							}
@@ -322,7 +322,8 @@ public class SpaceDao {
 			 			+ "from review r "
 			 			+ "join user u "
 			 			+ "on r.email = u.email "
-			 			+ "where r.room_no = ?";
+			 			+ "where r.room_no = ? "
+			 			+ "order by r.re_date desc;";
 			 pstmt = con.prepareStatement(sql);
 			 pstmt.setInt(1, num);
 			 rs =pstmt.executeQuery();
@@ -351,20 +352,21 @@ public class SpaceDao {
 		return reviewList;
 	}
 
-	public int getBoardCount() {
-		try {
+	public int getReviewCount(){
+		int count=0;
+		try{
 			con = ds.getConnection();
-			
-		} catch (SQLException e) {
-			System.out.println("getBoardCount"+e);
-		}finally{
-			freeResource();
+			String sql = "select count(*) from review ";
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if(rs.next()){
+				count = rs.getInt(1);
+			}
+		}catch(Exception e){
+			System.out.println("getReviewCount에서 오류"+e);
 		}
-		
-		return 0;
+		return count;
 	}
-	
-	
 		
 		
 

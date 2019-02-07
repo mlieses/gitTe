@@ -82,14 +82,15 @@ public class CommentDao {
 		return result;
 	}
 
-	public int insertComment(int room_no, String content) {
+	public int insertComment(int room_no, String content, String email) {
 		int commentNo = 0;
 		try{
 			con = ds.getConnection();
-			String sql ="insert into comment values(0, ?, 'ddd@gmail.com', ?, now())";
+			String sql ="insert into comment values(0, ?, ?, ?, now())";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, room_no);
-			pstmt.setString(2, content);
+			pstmt.setString(2, email);
+			pstmt.setString(3, content);
 			pstmt.executeUpdate();
 			
 			con = ds.getConnection();
