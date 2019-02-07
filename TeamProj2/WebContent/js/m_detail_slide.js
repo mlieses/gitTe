@@ -40,7 +40,7 @@ function big(num){
 function map(){
 	var lat = document.getElementById("lat").value;
 	var lng = document.getElementById("lng").value;
-	console.log(typeof(lng));
+	console.log(lng);
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 	mapOption = { 
 	    center: new daum.maps.LatLng(lat, lng), // 지도의 중심좌표

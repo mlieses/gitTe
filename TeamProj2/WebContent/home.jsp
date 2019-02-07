@@ -1,6 +1,8 @@
+<%@page import="home.homeDTO"%>
+<%@page import="java.util.Vector"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>   
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
 <!DOCTYPE html>
 <html>
 <title>나눔 공간</title>
@@ -14,10 +16,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
 <!-- JQuery -->
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
- 
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script> 
 
 <!-- awsome icon -->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" 
@@ -26,7 +25,19 @@ integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00
 <!-- datepicker -->
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script>
+
+
+<!-- bxslider -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+<script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+
+<script type="text/javascript">
+
+/**bxSlier*/
+$(document).ready(function(){
+ $('#bxslider').bxSlider();
+});
+
   
   $(document).ready(function() {
 	    $("#datepicker").datepicker({
@@ -41,11 +52,11 @@ integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00
 	  });
 	});
 
-</script>
+
 
 
  
-<script type="text/javascript">
+
 
 /*선택 창 열기*/
 
@@ -86,19 +97,6 @@ function getLocation() {
 	getLocation();
 
 	
-/*버튼 클릭*/
-// function myFunction(id) {
-// 	  var x = document.getElementById(id);
-
-// 	  if (x.className.indexOf("w3-hide") != -1) {//w3-hide가 있으면
-// 		  x.className = x.className.replace(" w3-hide", "");    
-// //	 	  x.className += " w3-show";
-// 	  } else { //없으면
-// //	     x.className = x.className.replace(" w3-show", "");
-// 	    x.className += " w3-hide";
-// 	  }
-// }
-
 
 function myFunction(id) {
 	  var x = document.getElementById(id);
@@ -106,6 +104,7 @@ function myFunction(id) {
 	  var b = document.getElementById("location_select");
 	  var c = document.getElementById("date_select");
 	  var d = document.getElementById("number_select");
+	
 	  
 	  
 	  if (x.className.indexOf("w3-show") == -1) {//처음 클릭했다.
@@ -115,6 +114,7 @@ function myFunction(id) {
 		  b.className = b.className.replace(" w3-show", "");
 		  c.className = c.className.replace(" w3-show", "");
 		  d.className = d.className.replace(" w3-show", "");
+	
 		  //내꺼만 다시 보이게
 		  x.className += " w3-show";
 	  } else { // 열려있는 상태에서 클릭했다.
@@ -134,13 +134,32 @@ function setValue(obj, target){
 	var b = document.getElementById("location_select");
 	var c = document.getElementById("date_select");
 	var d = document.getElementById("number_select");
+	
 	a.className = a.className.replace(" w3-show", "");
 	b.className = b.className.replace(" w3-show", "");
 	c.className = c.className.replace(" w3-show", "");
 	d.className = d.className.replace(" w3-show", "");
+
 }
 
+
+// 호스트되기 클릭시
+function star_click(){
 	
+	if("${sessionScope.udto.email}" == ""){			
+		alert("먼저 로그인 해주세요");
+	}else{
+		 if("${sessionScope.udto.host_check}" != 1){		 
+		 	if(confirm("호스트 등록이 되어있지 않습니다. 호스트 가입 하시겠습니까?")){
+				 location.href="./HostController.do";
+			}		 
+		 }else{
+			 alert("회원님은 이미 호스트가입이 되어 있습니다. 호스트 로그인 해주십시오.");
+			 
+		 }	
+	}
+}
+
 	
 </script>
 
@@ -151,48 +170,39 @@ font-family: "Nanum Barun Gothic";
 letter-spacing: 1px;
  
 }
-/* body{ */
-/*  letter-spacing: 2px; */
-/*  font-family: "Nanum Barun Gothic" !important;  */
-/*  color: #666666; */
-/* } */
 
-
-#search_div{
-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
 </style>
 
 
 
 <body>
+<!-- Navbar 복사4-->
 <jsp:include page="Top.jsp" flush="false"/>
+<!-- 복사4종료  -->
 
-<!-- Header -->
+<!-- Header시작 -->
 
 <header class="w3-display-container w3-content w3-wide" style="max-width:100%;" id="home">
-  <img class="w3-image" src="img/main03.jpg" width="100%">
-  <form action="창만들기.jsp" method="post">
- 	 <div class="w3-display-middle w3-margin-top w3-center w3-container" style="min-height: 500px; top:70%">
+  <img class="w3-image" src="img/main_pic2.jpg" width="100%">
+  <form action="search.do" method="post">
+ 	 <div class="w3-display-middle w3-margin-top w3-center w3-container" style="min-height: 500px; top:80%">
      <!-- 첫 row -->
-      <div class="w3-row w3-round-large w3-white w3-hide-small" style="margin:10px -16px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      <div class="w3-row w3-round-large w3-white w3-hide-small" style="margin:10px -70px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
        display: inline-block; vertical-align: top;">
       <div id="new" style="position:relative;">
-        <div class="w3-col l3 m3 w3-padding">
+        
+        <div class="w3-col l2 m2 w3-padding">
           <label>공간</label>
            <button type="button" onclick="myFunction('type_select')" style="border: none; padding:0px; background-color: white;">
-<!--           	<i class="fas fa-coffee" style="display:inline-block"></i> -->
-          	<input class="w3-input w3-border-0" type="text" value="카페" style = "text-align:center; font-size:1.5em; font-weight:bold; color:rgb(118,118,118);" id="type">
+          	<input type="text" id="type" name="type" value="카페" class="w3-input w3-border-0"   style = "text-align:center; font-size:1.5em; font-weight:bold; color:rgb(118,118,118);" >
             <i class="material-icons">keyboard_arrow_down</i>
           </button>
-          
-
         </div>
         
-        <div class="w3-col l3 m3 w3-border-left w3-padding">
+        <div class="w3-col l4 m4 w3-border-left w3-padding">
           <label >지역</label>
            <button type="button" onclick="myFunction('location_select')" style="border: none; padding:0px; background-color: white;">
-          	<input class="w3-input w3-border-0" type="text" value="해운대구" style = "text-align:center; font-size:1.5em; font-weight:bold; color:rgb(118,118,118)" id="location">
+          	<input type="text" id="location" name="location" value="해운대구" class="w3-input w3-border-0" style = "text-align:center; font-size:1.5em; font-weight:bold; color:rgb(118,118,118)" >
             <i class="material-icons">keyboard_arrow_down</i>
           </button>
         </div>
@@ -200,7 +210,7 @@ box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         <div class="w3-col l4 m4 w3-border-left w3-padding">
           <label>날짜</label><br/>
           <button type="button" onclick="myFunction('date_select')" style="border: none; padding:0px; background-color: white;">
-          	<input class="w3-input w3-border-0" type="text" style = "text-align:center; font-size:1.5em; font-weight:bold; color:rgb(118,118,118)" id="date">
+          	<input type="text" id="date" name="date" class="w3-input w3-border-0"  style = "text-align:center; font-size:1.5em; font-weight:bold; color:rgb(118,118,118)">
             <i class="material-icons">keyboard_arrow_down</i>
           </button>
         </div>
@@ -208,33 +218,33 @@ box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         <div class="w3-col l2 m2 w3-border-left w3-padding">
           <label>인원</label>
           <button type="button" onclick="myFunction('number_select')" style="border: none; padding:0px; background-color: white;">
-          	<input class="w3-input w3-border-0" type="text" value="2" style = "text-align:center; font-size:1.5em; font-weight:bold; color:rgb(118,118,118)" id="number">
+          	<input type="text" id="number" name="number" class="w3-input w3-border-0"  value="소" style = "text-align:center; font-size:1.5em; font-weight:bold; color:rgb(118,118,118)">
             <i class="material-icons">keyboard_arrow_down</i>
           </button>
         </div>
         	
       </div><!--row -->
        
-   <button class="w3-btn w3-round" onclick="submit()" style="background-color:rgb(252,247,52); color:rgb(11,11,11); width:31%;position:absolute;top:140px;left:30%;z-index:-1;">
-   <b>Search and find dates</b></button>
+   	  <button class="w3-btn w3-round" onclick="submit()" style="background-color:rgb(252,247,52); color:rgb(11,11,11); width:31%;position:absolute;top:140px;left:35%;z-index:-1;">
+   		<b>검색</b>
+   	  </button>
      
    </div>   
-   <!-- 선택 row -->
-      
-		<div class="w3-row w3-hide " style="margin:2px -16px;" id="type_select">
-	        <div class="w3-col l3 w3-padding w3-white w3-round" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+   
+   <!-- 선택 row -->   
+		<div class="w3-row w3-hide " style="margin:2px -70px;" id="type_select">
+	        <div class="w3-col l2 m2 w3-padding w3-white w3-round" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
 	  			<input type="button" value="카페" onclick="setValue(this, 'type')" style="border: none; padding:0px; background-color: white;"><br/>
 	  			<input type="button" value="스터디룸" onclick="setValue(this, 'type')" style="border: none; padding:0px; background-color: white;"><br/> 
 	  			<input type="button" value="강의실" onclick="setValue(this, 'type')" style="border: none; padding:0px; background-color: white;"><br/>
 	  			<input type="button" value="야외" onclick="setValue(this, 'type')" style="border: none; padding:0px; background-color: white;"><br/>  
 	        </div>
-	        
-	        <div class="w3-col l9 w3-padding"></div>
+	        <div class="w3-col l10 m10 w3-padding"></div>
         </div>
         
-       	<div class="w3-row w3-hide" style="margin:2px -16px;" id="location_select">
-	        <div class="w3-col l3 w3-padding"></div>
-	        <div class="w3-col l4 w3-padding w3-white w3-round" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+       	<div class="w3-row w3-hide" style="margin:2px -70px;" id="location_select">
+	        <div class="w3-col l2 w3-padding"></div>
+	        <div class="w3-col l5 w3-padding w3-white w3-round" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
 	  			<table width="100%">
 	  				<tr height="1.5em">
 	  					<td><input type="button" value="강서구" onclick="setValue(this, 'location')" style="border: none; padding:0px; background-color: white;"><br/></td>
@@ -242,7 +252,6 @@ box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 	  					<td><input type="button" value="기장구" onclick="setValue(this, 'location')" style="border: none; padding:0px; background-color: white;"><br/></td>
 	  					<td><input type="button" value="남구" onclick="setValue(this, 'location')" style="border: none; padding:0px; background-color: white;"><br/></td>
 	  				</tr>
-	  				
 	  				<tr>
 	  					<td><input type="button" value="동구" onclick="setValue(this, 'location')" style="border: none; padding:0px; background-color: white;"><br/></td>
 	  					<td><input type="button" value="동래구" onclick="setValue(this, 'location')" style="border: none; padding:0px; background-color: white;"><br/></td>
@@ -263,26 +272,24 @@ box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 	  					<td><input type="button" value="해운대구" onclick="setValue(this, 'location')" style="border: none; padding:0px; background-color: white;"><br/></td>
 	  				</tr>
 	  			</table>
-	  			
 	        </div>
 	        <div class="w3-col l5 w3-padding"></div>
         </div>
         
         
-        <div class="w3-row w3-hide w3-center" style="margin:2px -16px;" id="date_select">
+        <div class="w3-row w3-hide w3-center" style="margin:2px -70px;" id="date_select">
 	        <div class="w3-col l6 w3-padding"></div>
-	        <div class="w3-col l4 w3-padding w3-white w3-round" id="datepicker" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"></div>
+	        <div class="w3-col l4 w3-padding-small w3-white w3-round" id="datepicker" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"></div>
 	        <div class="w3-col l2 w3-padding"></div>
         </div>
         
         
-        <div class="w3-row w3-hide" style="margin:2px -16px;" id="number_select">
+        <div class="w3-row w3-hide" style="margin:2px -70px;" id="number_select">
 	        <div class="w3-col l10 w3-padding"></div>
 	        <div class="w3-col l2 w3-padding w3-white w3-round" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
-	  			<input type="button" value="1" onclick="setValue(this, 'number')" style="border: none; padding:0px; background-color: white;"><br/>
-	  			<input type="button" value="2" onclick="setValue(this, 'number')" style="border: none; padding:0px; background-color: white;"><br/> 
-	  			<input type="button" value="3" onclick="setValue(this, 'number')" style="border: none; padding:0px; background-color: white;"><br/>
-	  			<input type="button" value="4" onclick="setValue(this, 'number')" style="border: none; padding:0px; background-color: white;"><br/> 
+	  			<input type="button" value="소" onclick="setValue(this, 'number')" style="border: none; padding:0px; background-color: white;"><br/>
+	  			<input type="button" value="중" onclick="setValue(this, 'number')" style="border: none; padding:0px; background-color: white;"><br/> 
+	  			<input type="button" value="대" onclick="setValue(this, 'number')" style="border: none; padding:0px; background-color: white;"><br/>	  			 
 	        </div>        
         </div>
         
@@ -291,12 +298,7 @@ box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
    	 </div> <!-- 검색창  -->
    	   	   
 	</form>
-  
-<!--   <div class="w3-display-bottomleft w3-container w3-amber" -->
-<!--    		style="bottom:5%;opacity:0.7;width:100%"> -->
-<!--    <h2><b>예약카드4 Good Reasons<br>For travelling with us</b></h2> -->
-<!--    <br> -->
-<!--   </div> -->
+
 
 </header>
 
@@ -311,105 +313,123 @@ box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     <span id="my_location" style="font-size:20px;">내 위치</span>
   </div>
   
-<!-- 로그인시 Session값 받아오기 -->
- <c:set var="email" value="${sessionScope.udto.email }"/>
- <c:choose>
- 	<c:when test="${email eq null }"> 	
- 
+<!-- JSTL 로그인  시작 -->
+<c:set var="host_id" value="${sessionScope.hdto.host_id }"/>
+   <c:choose>
+      	<c:when test="${host_id eq null }">
+<!-- JSTL 로그인  종료 -->
+     
   <!-- 버튼(일반회원) -->
   <div class="w3-container w3-padding-16 w3-content" style="max-width:45%">
   	
   	<div class="w3-quarter w3-center">
-  	<a href="#" style="text-decoration: none;">
+  	<a href="./Event.do" style="text-decoration: none;">
   	<i class="material-icons" style="font-size:80px;color:#333;">loyalty</i>
   	<p style="margin:2px;">쿠폰/이벤트</p>
   	</a>
   	</div>
 
   	<div class="w3-quarter w3-center">
-  	<a href="#" style="text-decoration: none;">
+  	<a href="detailPageController.do?a=5" style="text-decoration: none;">
   	<i class="material-icons" style="font-size:80px;color:#333;">search</i>  	
   	<p style="margin:2px;">공간찾기</p>
   	</a>
   	</div>
   	
   	<div class="w3-quarter w3-center">
-  	<a href="#" style="text-decoration: none;">
+  	<a href="./ReservationController.do?userId=${sessionScope.udto.email}" style="text-decoration: none;">
   	<i class="material-icons" style="font-size:80px;color:#333;">event</i>
   	<p style="margin:2px;">예약내역</p>
   	</a>
   	</div>
   	
   	<div class="w3-quarter w3-center">
-  	<a href="#" style="text-decoration: none;">
+  	<a href="#" onclick="star_click()" style="text-decoration: none;">
   	<i class="material-icons" style="font-size:80px;color:#333;">stars</i>
   	<p style="margin:2px;">호스트되기</p>
   	</a>
   	</div>    
   </div>
+  
+<!-- JSTL 로그인  시작 -->  
 </c:when>
 <c:otherwise>  
+<!-- JSTL 로그인  종료 -->
+    
     <!-- 버튼(호스트회원) -->
-  <div class="w3-container w3-padding-16 w3-content" style="max-width:45%">
+    <div class="w3-container w3-padding-16 w3-content" style="max-width:45%">
   	
   	<div class="w3-col w3-center" style="width:20%;">
-  	<a href="#" style="text-decoration: none;">
+  	<a href="./Event.do" style="text-decoration: none;">
   	<i class="material-icons" style="font-size:80px;color:#333;">loyalty</i>
   	<p style="margin:2px;">쿠폰/이벤트</p>
   	</a>
   	</div>
   	
   	<div class="w3-col w3-center" style="width:20%;">
-  	<a href="#" style="text-decoration: none;">
+  	<a href="detailPageController.do?a=5" style="text-decoration: none;">
   	<i class="material-icons" style="font-size:80px;color:#333;">search</i>  	
   	<p style="margin:2px;">공간찾기</p>
   	</a>
   	</div>
   	
   	<div class="w3-col w3-center" style="width:20%;">
-  	<a href="#" style="text-decoration: none;">
+  	<a href="detailPageController.do?a=6&HostId=${sessionScope.hdto.host_id}" style="text-decoration: none;">
   	<i class="material-icons" style="font-size:80px;color:#333;">weekend</i>
   	<p style="margin:2px;">공간등록</p>
   	</a>
   	</div>
   	
   	<div class="w3-col w3-center" style="width:20%;">
-  	<a href="#" style="text-decoration: none;">
+  	<a href="detailPageController.do?a=7&HostId=${sessionScope.hdto.host_id}" style="text-decoration: none;">
   	<i class="material-icons" style="font-size:80px;color:#333;">event_note</i>
   	<p style="margin:2px;">공간관리</p>
   	</a>
   	</div>   
   	
   	<div class="w3-col w3-center" style="width:20%;">
-  	<a href="#" style="text-decoration: none;">
+  	<a href="./ReservationController.do?userId=${sessionScope.udto.email}" style="text-decoration: none;">
   	<i class="material-icons" style="font-size:80px;color:#333;">event</i>
   	<p style="margin:2px;">예약내역</p>
   	</a>
-  	</div>
-  	
-  	 
+  	</div>  	 
   </div>
+  
+<!-- JSTL 로그인  시작 -->  
 </c:otherwise>
-</c:choose>
+</c:choose>  
+<!-- JSTL 로그인  종료 -->
 
-  <!-- Project Section 추천공간-->
+  <!-- Project Section 추천공간: 호스트 유저-->
   <div class="w3-container w3-padding-32" id="projects">
-    <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">추천 공간 ${sessionScope.udto.name }</h3>
+    <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">추천 공간</h3>
   </div>
 
-  <div class="w3-row-padding">
+<% 
+Vector<homeDTO> recV = (Vector<homeDTO>)request.getAttribute("recommendV");
+%>
+
+
+  <div class="w3-row-padding" id="bxslider">
+	<%if(recV.size()==0){ %>
     <div class="w3-col l4 w3-margin-bottom">
       <a href="#" class="w3-btn" style="padding: 0px">
 	      <div class="w3-display-container">
-		     <div class="w3-display-topleft w3-black w3-padding">Summer House</div>
-		     <img src="img/room01.jpg" alt="House" style="width:100%">
+		    <div class="w3-display-topleft w3-white w3-padding" style="opacity:0.8">
+		   		<small style="color: rgb(28,123,127); font-weight: bold;">공간 유형 평점:</small>
+      			<p style="font-weight:bold;">공간이름</p>
+		    </div>
+		    <img src="img/room01.jpg" alt="House" style="width:100%">
 	      </div>
       </a>
     </div>
     <div class="w3-col l4 w3-margin-bottom">
       <a href="#" class="w3-btn" style="padding: 0px">
 	      <div class="w3-display-container">
-		    <div class="w3-display-topleft w3-black w3-padding">Brick House</div>
+		    <div class="w3-display-topleft w3-white w3-padding" style="opacity:0.8">
+		   		<small style="color: rgb(28,123,127); font-weight: bold;">공간 유형 평점:</small>
+      			<p style="font-weight:bold;">공간이름</p>
+		    </div>
 		    <img src="img/room02.jpg" alt="House" style="width:100%">
 	      </div>
       </a>
@@ -417,43 +437,132 @@ box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     <div class="w3-col l4 w3-margin-bottom">
       <a href="#" class="w3-btn" style="padding: 0px">
 	      <div class="w3-display-container">
-		    <div class="w3-display-topleft w3-black w3-padding">Renovated</div>
+		    <div class="w3-display-topleft w3-white w3-padding" style="opacity:0.8">
+		   		<small style="color: rgb(28,123,127); font-weight: bold;">공간 유형 평점:</small>
+      			<p style="font-weight:bold;">공간이름</p>
+		    </div>
 		    <img src="img/room03.jpg" alt="House" style="width:100%">
 	      </div>
       </a>
     </div>
+	<%}else{ 
+			int j = recV.size()<3? recV.size():3;
+			for(int i=0; i<j; i++){
+				homeDTO recDTO = recV.get(i);
+	%>
+	
+	 <div class="w3-col l4 w3-margin-bottom">
+      <a href="m_detail?num=<%=recDTO.getRoom_no()%>" class="w3-btn" style="padding: 0px">
+	      <div class="w3-display-container">
+		    <div class="w3-display-topleft w3-white w3-padding" style="opacity:0.8">
+		   		<small style="color: rgb(28,123,127); font-weight: bold;"><%=recDTO.getRoom_type()%> 평점:<%=(Math.round(recDTO.getStar()*10)/10.0)%></small>
+      			<p style="font-weight:bold;"><%=recDTO.getSubject()%></p>
+		    </div>
+		    <img src="img/<%=recDTO.getPic1()%>" alt="House" style="width:100%">
+	      </div>
+      </a>
+      </div>
+   
+  	<%
+  			}
+		}	
+  	%>
+  
+  </div>
+  
+  
+  <!-- Project Section 인기공간 : 추천 수 -->
+  <div class="w3-container w3-padding-32" id="projects">
+    <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">인기 공간</h3>
+  </div>
+<% 
+Vector<homeDTO> popV = (Vector<homeDTO>)request.getAttribute("popularV");
+%>
+  <div class="w3-row-padding">
+    <%if(popV.size()==0){ %>
+     <div class="w3-col l4 w3-margin-bottom">
+      <a href="#" class="w3-btn" style="padding: 0px">
+	      <div class="w3-display-container">
+		    <div class="w3-display-topleft w3-white w3-padding" style="opacity:0.8">
+		   		<small style="color: rgb(28,123,127); font-weight: bold;">공간 유형 예약수: 평점:</small>
+      			<p style="font-weight:bold;">공간이름</p>
+		    </div>
+		    <img src="img/room01.jpg" alt="House" style="width:100%">
+	      </div>
+      </a>
+    </div>
     
-<!--     <div class="w3-col l3 w3-margin-bottom"> -->
-<!--       <a href="#" class="w3-btn" style="padding: 0px"> -->
-<!-- 	      <div class="w3-display-container"> -->
-<!-- 		     <div class="w3-display-topleft w3-black w3-padding">Barn House</div> -->
-<!-- 		     <img src="img/room04.jpg" alt="House" style="width:100%">  -->
-<!-- 	      </div> -->
-<!--       </a> -->
-<!--     </div> -->
+    <div class="w3-col l4 w3-margin-bottom">
+      <a href="#" class="w3-btn" style="padding: 0px">
+	      <div class="w3-display-container">
+		    <div class="w3-display-topleft w3-white w3-padding" style="opacity:0.8">
+		   		<small style="color: rgb(28,123,127); font-weight: bold;">공간 유형 예약수: 평점:</small>
+      			<p style="font-weight:bold;">공간이름</p>
+		    </div>
+		    <img src="img/room02.jpg" alt="House" style="width:100%">
+	      </div>
+      </a>
+    </div>
+    
+    <div class="w3-col l4 w3-margin-bottom">
+      <a href="#" class="w3-btn" style="padding: 0px">
+	      <div class="w3-display-container">
+		    <div class="w3-display-topleft w3-white w3-padding" style="opacity:0.8">
+		   		<small style="color: rgb(28,123,127); font-weight: bold;">공간 유형 예약수: 평점:</small>
+      			<p style="font-weight:bold;">공간이름</p>
+		    </div>
+		    <img src="img/room03.jpg" alt="House" style="width:100%">
+	      </div>
+      </a>
+    </div>
+      <%}else{ 
+			int j = popV.size()<3? popV.size():3;
+			for(int i=0; i<j; i++){
+				homeDTO popDTO = popV.get(i);
+	%>
+	  <div class="w3-col l4 w3-margin-bottom">
+      <a href="m_detail?num=<%=popDTO.getRoom_no()%>" class="w3-btn" style="padding: 0px">
+	      <div class="w3-display-container">
+		    <div class="w3-display-topleft w3-white w3-padding" style="opacity:0.8">
+		   		<small style="color: rgb(28,123,127); font-weight: bold;"><%=popDTO.getRoom_type()%> 예약수:<%=popDTO.getCount()%> 평점:<%=(Math.round(popDTO.getStar()*10)/10.0)%></small>
+      			<p style="font-weight:bold;"><%=popDTO.getSubject()%></p>
+		    </div>
+		    <img src="img/<%=popDTO.getPic1()%>" alt="House" style="width:100%">
+<!-- 		    <img src="img/room03.jpg" alt="House" style="width:100%"> -->
+	      </div>
+      </a>
+      </div>
+   
+  	<%
+  			}
+		}	
+  	%>
   </div>
 
 
 
 
  <!-- Slideshow -->
- <hr/>
+ <div class="w3-container w3-padding-32" id="projects">
+    <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">이벤트<a href="./Event.do" class="w3-right w3-medium">더보기</a></h3>
+  </div>
+  
   <div class="w3-container">
     <div class="w3-display-container mySlides">
       <img src="img/event02.jpg" style="width:100%; height:30%;">
       <div class="w3-display-topleft w3-container w3-padding-32">
-        <span class="w3-white w3-padding-large w3-animate-bottom">Lorem ipsum</span>
+        <span class="w3-white w3-padding-large w3-animate-bottom" style="opacity:0.8">Lorem ipsum</span>
       </div>
     </div>
     <div class="w3-display-container mySlides">
       <img src="img/event02.jpg" style="width:100%; height:30%;">
       <div class="w3-display-middle w3-container w3-padding-32" >
-        <span class="w3-white w3-padding-large w3-animate-bottom">Klorim tipsum</span>
+        <span class="w3-white w3-padding-large w3-animate-bottom" style="opacity:0.8">Klorim tipsum</span>
       </div>
     </div>
     <div class="w3-display-container mySlides">
       <img src="img/event02.jpg" style="width:100%; height:30%;">
-      <div class="w3-display-topright w3-container w3-padding-32">
+      <div class="w3-display-topright w3-container w3-padding-32" style="opacity:0.8">
         <span class="w3-white w3-padding-large w3-animate-bottom">Blorum pipsum</span>
       </div>
     </div>
@@ -477,11 +586,13 @@ box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 <!-- End page content -->
 </div>
 
-
 <!-- Footer -->
+	<jsp:include page="Footer.jsp" flush="false"/>
+<!-- Footer 끝 -->
+<!-- Footer
 <footer class="w3-center w3-white w3-padding-50">
   <p><a href="#" title="W3.CSS" target="_blank" class="w3-hover-text-green">Share Space</a></p>
-</footer>
+</footer> -->
 
 
 <script>
@@ -512,7 +623,6 @@ function showDivs(n) {
   x[slideIndex-1].style.display = "block";  
   dots[slideIndex-1].className += " w3-white";
 }
-
 
 
 
