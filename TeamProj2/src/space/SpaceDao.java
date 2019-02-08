@@ -37,7 +37,7 @@ public class SpaceDao {
 				// 1. Was서버와 연결된 웹프로젝트의 모든정보를 가지고 있는 컨텍스트 객체 생성
 				Context init = new InitialContext();
 				// 2. 연결된 Was서버에서 DataSource(커넥션 풀)을 검색해서 얻기
-				ds = (DataSource)init.lookup("java:comp/env/jdbc/ShareSpace");
+				ds = (DataSource)init.lookup("java:comp/env/jdbc/sharespace");
 				
 			} catch (Exception e) {
 				// TODO: handle exception
@@ -179,11 +179,11 @@ public class SpaceDao {
 		return list;
 	}
 
-	public ArrayList<String> getNoDate(int num) {
-		ArrayList<String> noList = new ArrayList<String>();
-		for(int i=0;i<7;i++){
+	public String getNoDate(int count, int num) {
+		
+		String noDate = null;
 			try{
-				Date date = Date.valueOf(LocalDate.now().plusDays(i));
+				Date date = Date.valueOf(LocalDate.now().plusDays(count));
 				System.out.println(date);
 				SimpleDateFormat fo = new SimpleDateFormat("yyyy-M-d");
 //				System.out.println("날짜 포맷");
@@ -211,7 +211,7 @@ public class SpaceDao {
 							}
 							if(j==12){
 								System.out.println("예약이 다찬 날짜 : "+fo.format(date));
-								noList.add(fo.format(date));
+								noDate = fo.format(date);
 								
 							}
 						}
@@ -222,14 +222,16 @@ public class SpaceDao {
 			//			System.out.println(dd);
 					}
 					
-			
+					
 			}catch(Exception e){
 				System.out.println("getNoDate에서 에러"+e);
 			}finally{
+				System.out.println("getNoDate 끝남");
 				freeResource();
 			}
-		}
-		return noList;
+			
+		
+		return noDate;
 	}
 
 	public JSONArray getTime(String selectDate, int roomNo) {
