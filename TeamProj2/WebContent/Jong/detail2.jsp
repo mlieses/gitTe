@@ -5,11 +5,17 @@
 <%@page import="java.util.Vector"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+
+
+
+
 
 <!-- JQuery -->
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script> 
@@ -417,19 +423,34 @@ function setValue(obj, target){
 			<div style="width: 50%; position: fixed; right: 0; margin-top: 152px; height:100%">
 					
 					<div id="map" style="width:100%; height:100%;"></div>
-					<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=030fe73ff2f443d44661c605e8a0667f"></script>
-						<script>
-						var container = document.getElementById('map');
-						var options = {
-							center: new daum.maps.LatLng(33.450701, 126.570667),
-							level: 3
-						};
-				
-						var map = new daum.maps.Map(container, options);
-						</script>		
+						
 			</div>		
 	
 		</div>
+
+	
+	<c:set var="vnum" value="${vector['0']}" ></c:set>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=030fe73ff2f443d44661c605e8a0667f"></script>
+<script>
+	
+	
+// 	var v_num = '${fn:length(vector)}';
+	alert(vnum);
+	/* for(var i=0; i<v_num;i++){
+		alert('${vector['+i+'].}')
+	} */
+	
+	var container = document.getElementById('map');
+	var options = {
+		center: new daum.maps.LatLng(33.450701, 126.570667),
+		level: 3
+	};
+
+	var map = new daum.maps.Map(container, options);
+	
+</script>		
+	
+		
 	
 	
 </body>

@@ -427,10 +427,11 @@ function setValue(obj, target){
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=030fe73ff2f443d44661c605e8a0667f"></script>
 <script>
 	
-	var v_num = '${fn:length(vector)}'; 
-	for(var i=0; i<v_num;i++){
+	var v_num = '${fn:length(vector)}';
+	alert(v_num);
+	/* for(var i=0; i<v_num;i++){
 		alert('${vector['+i+'].}')
-	}
+	} */
 	
 	var container = document.getElementById('map');
 	var options = {
